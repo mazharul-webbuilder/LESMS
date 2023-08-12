@@ -204,10 +204,10 @@
                     <div class="col-xl-3 col-lg-3 col-md-6">
                         <div class="headerarea__right">
                             <div class="headerarea__login">
-                                <a href="login.html">Login</a>
+                                <a href="{{ route('login') }}">Login</a>
                             </div>
                             <div class="headerarea__button">
-                                <a href="#">Get Started Free</a>
+                                <a href="{{ route('register') }}">Sign Up</a>
                             </div>
                         </div>
                     </div>

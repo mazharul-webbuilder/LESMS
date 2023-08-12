@@ -19,4 +19,20 @@ class HomeController extends Controller
     {
         return view('frontend.home.home');
     }
+
+    /**
+     * Show the contact page from landing page
+    */
+    public function contact():View
+    {
+        return view('frontend.home.contact');
+    }
+
+    /**
+     * Show the about page from landing page
+    */
+    public function about():View
+    {
+        return view('frontend.home.about');
+    }
 }

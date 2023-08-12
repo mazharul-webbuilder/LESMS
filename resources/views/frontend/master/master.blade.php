@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('asset/img') }}/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('asset/img/favicon.ico') }}">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -70,10 +70,10 @@
                     <div class="topbar__left">
                         <ul>
                             <li>
-                                Call Us: +1 800 123 456 789
+                                Call Bd: +88 019 732 173 48
                             </li>
                             <li>
-                                - Mail Us: Itcroc@mail.com
+                                - Mail Bd: mdyeasinmiaarafat@gmail.com
                             </li>
                         </ul>
                     </div>
@@ -84,7 +84,7 @@
                             <i class="icofont-location-pin"></i>
                         </div>
                         <div class="topbar__text">
-                            <p>684 West College St. Sun City, USA</p>
+                            <p>R-1/Block-C Khilgaon, Dhaka, Bangladesh</p>
                         </div>
                         <div class="topbar__list">
                             <ul>
@@ -118,8 +118,7 @@
                     <div class="col-xl-2 col-lg-2 col-md-6">
                         <div class="headerarea__left">
                             <div class="headerarea__left__logo">
-
-                                <a href="index.html"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
+                                <a href="{{ route('home') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
                             </div>
 
                         </div>
@@ -128,7 +127,7 @@
                         <div class="headerarea__main__menu">
                             <nav>
                                 <ul>
-                                    <li><a class="headerarea__has__dropdown" href="index.html">Home
+                                    <li><a class="" href="index.html">Home
                                             <i class="icofont-rounded-down"></i></a>
                                         <ul class="headerarea__submenu ">
                                             <li><a href="index.html">Home Style 1</a></li>
@@ -140,11 +139,7 @@
                                         </ul>
                                     </li>
 
-                                    <li><a class="headerarea__has__dropdown" href="about.html">About
-
-                                        </a>
-
-                                    </li>
+                                    <li><a class="headerarea__has__dropdown" href="{{ route('about') }}">About</a></li>
                                     <li><a class="headerarea__has__dropdown" href="blog.html">Blog
                                             <i class="icofont-rounded-down"></i>
                                         </a>
@@ -176,13 +171,13 @@
                                     </li>
 
 
-                                    <li><a class="headerarea__has__dropdown" href="instructor.html">Pages
+                                    <li><a class="headerarea__has__dropdown" href="javascript:void(0)">Shop
                                             <i class="icofont-rounded-down"></i>
                                         </a>
                                         <ul class="headerarea__submenu">
                                             <li><a href="about.html">About</a></li>
                                             <li><a href="about-dark.html">About (Dark)</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="{{route('contact')}}">Contact</a></li>
                                             <li><a href="contact-dark.html">Contact (Dark)</a></li>
                                             <li><a href="instructor.html">Instructor</a></li>
                                             <li><a href="instructor-dark.html">Instructor (Dark)</a></li>
@@ -199,7 +194,7 @@
                                     </li>
 
 
-                                    <li><a href="contact.html">Contact</a>
+                                    <li><a href="{{route('contact')}}">Contact</a>
 
                                     </li>
                                 </ul>
@@ -596,3 +591,13 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+

@@ -118,7 +118,7 @@
                     <div class="col-xl-2 col-lg-2 col-md-6">
                         <div class="headerarea__left">
                             <div class="headerarea__left__logo">
-                                <a href="{{ route('home') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
+                                <a href="{{ route('dashboard') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
                             </div>
 
                         </div>

@@ -22,7 +22,7 @@
                         </div>
                         <div class="breadcrumb__inner">
                             <ul>
-                                <li><a href="{{ route('home') }}">Home</a></li>
+                                <li><a href="{{ route('dashboard') }}">Home</a></li>
                                 <li> About Page</li>
                             </ul>
                         </div>

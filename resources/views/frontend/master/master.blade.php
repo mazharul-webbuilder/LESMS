@@ -118,7 +118,7 @@
                     <div class="col-xl-2 col-lg-2 col-md-6">
                         <div class="headerarea__left">
                             <div class="headerarea__left__logo">
-                                <a href="{{ route('dashboard') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
+                                <a href="{{ route('home') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
                             </div>
 
                         </div>
@@ -127,7 +127,7 @@
                         <div class="headerarea__main__menu">
                             <nav>
                                 <ul>
-                                    <li><a class="" href="index.html">Home
+                                    <li><a class="" href="{{route('home')}}">Home
                                             <i class="icofont-rounded-down"></i></a>
                                         <ul class="headerarea__submenu ">
                                             <li><a href="index.html">Home Style 1</a></li>
@@ -254,7 +254,7 @@
 
                     <nav>
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><a href="index.html">Home</a>
+                            <li class="menu-item-has-children"><a href="{{route('home')}}">Home</a>
                                 <ul class="dropdown">
                                     <li><a href="index.html">Home Style 1</a></li>
                                     <li><a href="index-dark.html">Home 1 (Dark)</a></li>

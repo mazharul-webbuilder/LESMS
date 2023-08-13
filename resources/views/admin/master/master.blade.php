@@ -542,7 +542,7 @@
     <!-- ============================================================== -->
     <div class="main-content">
 
-       @yield('content')
+        @yield('content')
         <!-- End Page-content -->
 
         <!-- Modal -->

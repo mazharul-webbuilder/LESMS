@@ -1,6 +1,6 @@
 @extends('admin.master.master')
 @section('title')
-    {{ config('app.name') }} | Admin Dashboard
+    Admin Dashboard | {{ config('app.name') }}
 @endsection
 @section('content')
     <div class="page-content">

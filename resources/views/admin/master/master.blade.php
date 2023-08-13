@@ -209,7 +209,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="rounded-circle header-profile-user" src="{{ asset("backend/assets") }}/images/users/avatar-1.jpg"
                              alt="Header Avatar">
-                        <span class="d-none d-xl-inline-block ml-1">Super Admin</span>
+                        <span class="d-none d-xl-inline-block ml-1">{{ \Illuminate\Support\Facades\Auth::guard('admin')->user()->name }}</span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -219,7 +219,11 @@
                         <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
                         <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
+                        <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('adminlogout{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}').submit();"
+                            <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout
+                        </a>
+                        <form action="{{route('admin.logout')}}" method="post" id="adminlogout{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}">@csrf
+                        </form>
                     </div>
                 </div>
 

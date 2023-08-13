@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('is_student', ['1', '0'])->default('0');
+            $table->tinyInteger('is_student')->default('0');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

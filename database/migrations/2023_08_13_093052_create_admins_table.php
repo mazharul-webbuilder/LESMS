@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique()->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('active', ['1', '0'])->default('1');
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }

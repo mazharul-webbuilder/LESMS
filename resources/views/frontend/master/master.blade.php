@@ -203,12 +203,40 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6">
                         <div class="headerarea__right">
-                            <div class="headerarea__login">
-                                <a href="{{ route('login') }}">Login</a>
-                            </div>
-                            <div class="headerarea__button">
-                                <a href="{{ route('register') }}">Sign Up</a>
-                            </div>
+                            @if (Auth::guard('web')->check())
+                                <div class="main_menu_wrap">
+                                    <div class="headerarea__main__menu">
+                                        <nav>
+                                            <ul>
+                                                <li><a class=""
+                                                       style="padding: 10px 15px; border: 1px solid #6528F7; border-radius: 5px;"
+                                                       href="javascript:void(0)">{{Auth::user()->first_name}}
+                                                        <i class="icofont-rounded-down"></i></a>
+                                                    <ul class="headerarea__submenu" style="min-width: 120px; top: 80px">
+                                                        <li><a href="{{route('dashboard')}}">Dashboard</a></li>
+                                                        <li><a href="#">Setting</a></li>
+                                                        <li>
+                                                            <a href="javascript:void(0)"
+                                                               onclick="event.preventDefault();
+                                                               document.getElementById('User{{Auth::user()->id}}LogoutForm').submit()">Logout</a>
+                                                        </li>
+                                                        <form action="{{ route('logout') }}" method="post" id="User{{ Auth::user()->id }}LogoutForm">
+                                                            @csrf
+                                                        </form>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="headerarea__login">
+                                    <a href="{{ route('login') }}">Login</a>
+                                </div>
+                                <div class="headerarea__button">
+                                    <a href="{{ route('register') }}">Sign Up</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

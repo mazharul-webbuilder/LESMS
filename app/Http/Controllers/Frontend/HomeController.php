@@ -7,10 +7,10 @@ use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('guest');
+//    }
 
     /**
      * Show the application Landing Page.

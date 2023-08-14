@@ -162,15 +162,24 @@
                                     <h5 class="login__title">Login</h5>
                                 </div>
 
-                                <form action="#">
+                                <form action="{{route('login')}}" method="POST">
+                                    @if($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @csrf
                                     <div class="login__form">
-                                        <label class="form__label">Username or email</label>
-                                        <input class="common__login__input" type="text" placeholder="Your username or email">
-
+                                        <label class="form__label">Email</label>
+                                        <input class="common__login__input" type="email" name="email" placeholder="Your email">
                                     </div>
                                     <div class="login__form">
                                         <label class="form__label">Password</label>
-                                        <input class="common__login__input" type="password" placeholder="Password">
+                                        <input class="common__login__input" type="password" name="password" placeholder="Password">
 
                                     </div>
                                     <div class="login__form d-flex justify-content-between flex-wrap gap-2">
@@ -183,7 +192,7 @@
                                         </div>
                                     </div>
                                     <div class="login__button">
-                                        <a class="default__button" href="#">Log In</a>
+                                        <input type="submit" class="w-100 default__button" value="Log In">
                                     </div>
                                 </form>
 

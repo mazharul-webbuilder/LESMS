@@ -30,8 +30,8 @@
 	|
 	|
 	|___Section Styles
-	|	|___ Hero Banner 
-	|	|___ Education 
+	|	|___ Hero Banner
+	|	|___ Education
 	|	|___ Training
 	|	|___ About
 	|	|___ Popular
@@ -43,19 +43,19 @@
 	|	|___ Team
 	|
 	|___Page Styles
-	|	|___ Instructor 
-	|	|___ Blog 
-	|	|___ Course 
-	|	|___ Contact 
-	|	|___ Error 
-	|	|___ Breadcrumb 
+	|	|___ Instructor
+	|	|___ Blog
+	|	|___ Course
+	|	|___ Contact
+	|	|___ Error
+	|	|___ Breadcrumb
 	|
 	|___Footer Styles
-	|	|___ Footer 
+	|	|___ Footer
 	|	|___ Copyright
 	|
 	|___Light/Dark Styles
-	|	|___ Light/Dark 
+	|	|___ Light/Dark
 	|
 	|___ End Style Sheet Indexing
 
@@ -768,7 +768,7 @@ li {
 }
 
 /*****************************************************
-    37. Preloader CSS Here 
+    37. Preloader CSS Here
 ****************************/
 #back__preloader {
   display: -ms-flexbox;
@@ -10917,3 +10917,7 @@ Dark Mode
 .is_dark .faqarea__wrapper .accordion-body {
   background: var(--whiteColor);
 }/*# sourceMappingURL=style.css.map */
+
+.invalid-request{
+    border: 1px solid red!important;
+}

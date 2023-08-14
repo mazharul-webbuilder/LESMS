@@ -1,6 +1,6 @@
 @extends('frontend.master.master')
 @section('title')
-    Login
+    Login | {{ config('app.name') }}
 @endsection
 @section('content')
     <!-- breadcrumbarea__section__start -->
@@ -16,7 +16,7 @@
                         </div>
                         <div class="breadcrumb__inner">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{route('home')}}">Home</a></li>
                                 <li>Log In</li>
                             </ul>
                         </div>
@@ -61,20 +61,26 @@
                             <div class="loginarea__wraper">
                                 <div class="login__heading">
                                     <h5 class="login__title">Login</h5>
-                                    <p class="login__description">Don't have an account yet? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Sign up for free</a></p>
                                 </div>
 
-
-
-                                <form action="#">
+                                <form action="{{route('login')}}" method="POST">
+                                    @if($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @csrf
                                     <div class="login__form">
-                                        <label class="form__label">Username or email</label>
-                                        <input class="common__login__input" type="text" placeholder="Your username or email">
-
+                                        <label class="form__label">Email</label>
+                                        <input class="common__login__input" type="email" name="email" placeholder="Your email">
                                     </div>
                                     <div class="login__form">
                                         <label class="form__label">Password</label>
-                                        <input class="common__login__input" type="password" placeholder="Password">
+                                        <input class="common__login__input" type="password" name="password" placeholder="Password">
 
                                     </div>
                                     <div class="login__form d-flex justify-content-between flex-wrap gap-2">
@@ -87,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="login__button">
-                                        <a class="default__button" href="#">Log In</a>
+                                        <input type="submit" class="w-100 default__button" value="Log In">
                                     </div>
                                 </form>
 
@@ -115,47 +121,65 @@
 
 
 
-                                <form action="#">
+                                <form action="{{route('register')}}" method="POST">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="login__form">
-                                                <label class="form__label">First Name</label>
-                                                <input class="common__login__input" type="text" placeholder="First Name">
+                                                <label class="form__label">First Name*</label>
+                                                <input class="@error('first_name') invalid-request @enderror common__login__input" value="{{old('first_name')}}" name="first_name" type="text" placeholder="First Name">
+                                                @error('first_name')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="login__form">
+                                                <label class="form__label">Last Name*</label>
+                                                <input class="@error('last_name') invalid-request @enderror common__login__input" name="last_name" value="{{old('last_name')}}" type="text" placeholder="Last Name">
+                                                @error('last_name')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-6">
+                                            <div class="login__form">
+                                                <label class="form__label">Email*</label>
+                                                <input class="@error('email') invalid-request @enderror common__login__input" value="{{old('email')}}" name="email" type="email" placeholder="Your Email">
+                                                @error('email')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-6">
+                                            <div class="login__form">
+                                                <label class="form__label">Phone</label>
+                                                <input class="@error('phone') invalid-request @enderror common__login__input" value="{{old('phone')}}" name="phone" type="text" placeholder="Ex: 01638574281">
+                                                @error('phone')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-6">
+                                            <div class="login__form">
+                                                <label class="form__label">Password*</label>
+                                                <input class="@error('password') invalid-request @enderror  common__login__input" name="password" type="password" placeholder="Password">
+                                                @error('password')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
 
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="login__form">
-                                                <label class="form__label">Last Name</label>
-                                                <input class="common__login__input" type="password" placeholder="Last Name">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="login__form">
-                                                <label class="form__label">Username</label>
-                                                <input class="common__login__input" type="password" placeholder="Username">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="login__form">
-                                                <label class="form__label">Email</label>
-                                                <input class="common__login__input" type="password" placeholder="Your Email">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="login__form">
-                                                <label class="form__label">Password</label>
-                                                <input class="common__login__input" type="password" placeholder="Password">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="login__form">
-                                                <label class="form__label">Re-Enter Password</label>
-                                                <input class="common__login__input" type="password" placeholder="Re-Enter Password">
+                                                <label class="form__label">Re-Enter Password*</label>
+                                                <input class="@error('password_confirmation') invalid-request @enderror common__login__input" name="password_confirmation" type="password" placeholder="Re-Enter Password">
+                                                @error('password_confirmation')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -163,14 +187,18 @@
 
                                     <div class="login__form d-flex justify-content-between flex-wrap gap-2">
                                         <div class="form__check">
-                                            <input id="accept_pp" type="checkbox"> <label for="accept_pp">Accept the Terms and Privacy Policy</label>
+                                            <input id="accept_pp"
+                                                   name="terms_condition"
+                                                   type="checkbox" required>
+                                            <label for="accept_pp">Accept the Terms and Privacy Policy*</label>
                                         </div>
 
                                     </div>
                                     <div class="login__button">
-                                        <a class="default__button" href="#">Log In</a>
+                                        <input type="submit" class="default__button w-100" value="Sign Up">
                                     </div>
                                 </form>
+
                             </div>
                         </div>
 

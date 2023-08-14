@@ -1,7 +1,12 @@
 <?php
 
-//FrontEnd Routes
-include "frontend.php";
 
-//Backend Routes
-include "backend.php";
+
+
+
+
+
+//Frontend Routes
+require __DIR__. '/frontend.php';
+// Admin Routes
+require __DIR__. '/backend.php';

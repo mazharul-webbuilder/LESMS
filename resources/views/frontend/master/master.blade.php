@@ -220,7 +220,7 @@
                                                                onclick="event.preventDefault();
                                                                document.getElementById('User{{Auth::user()->id}}LogoutForm').submit()">Logout</a>
                                                         </li>
-                                                        <form action="{{ route('logout') }}" method="post" id="User{{ Auth::user()->id }}LogoutForm">
+                                                        <form action="{{ route('admin.logout') }}" method="post" id="User{{ Auth::user()->id }}LogoutForm">
                                                             @csrf
                                                         </form>
                                                     </ul>

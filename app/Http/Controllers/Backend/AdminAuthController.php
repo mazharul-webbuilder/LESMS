@@ -21,14 +21,14 @@ class AdminAuthController extends Controller
     /**
      * Authenticate Admin
     */
-    public function authenticate(AdminLoginRequest $request): RedirectResponse
+    public function authenticate(AdminLoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (auth()->guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+            return response()->json(['status' => true]);
         } else {
-            return redirect()->back()->with('warning', 'Invalid credentials');
+            return response()->json(['status' => false, 'message' => 'Invalid credentials']);
         }
     }
 

@@ -48,32 +48,18 @@
                             </a>
                         </div>
                         <div class="p-2">
-                            <form class="form-horizontal" action="" method="POST">
-{{--                                @if($errors->any())--}}
-{{--                                    <div class="alert alert-danger">--}}
-{{--                                        <ul>--}}
-{{--                                            @foreach($errors->all() as $error)--}}
-{{--                                                <li>{{$error}}</li>--}}
-{{--                                            @endforeach--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                @endif--}}
-                                @if(Session::has('warning'))
-                                    <div class="alert alert-danger text-center">
-                                        {{Session::get('warning')}}
-                                    </div>
-                                @endif
+                            <form class="form-horizontal" action="" method="POST" id="adminLoginForm">
+                                <h6 class="text-center text-danger" id="AdminLoginError"></h6>
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">Email</label>
                                     <input type="email" name="email" value="{{old('email')}}" class="form-control" id="username" placeholder="Enter email">
+                                    <span class="error-message" id="email-error"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="userpassword">Password</label>
                                     <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" id="userpassword" placeholder="Enter password">
-{{--                                    @error('password')--}}
-{{--                                    <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                                    @enderror--}}
+                                    <span class="error-message" id="password-error"></span>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" name="rememberMe" class="custom-control-input" id="customControlInline">
@@ -100,6 +86,8 @@
 
 <!-- App js -->
 <script src="{{ asset("backend/assets")}}/js/app.js"></script>
+
+@include('admin.ajax.auth.login-ajax')
 </body>
 
 <!-- Mirrored from themesbrand.com/skote/layouts/vertical/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 08 Sep 2020 15:08:04 GMT -->

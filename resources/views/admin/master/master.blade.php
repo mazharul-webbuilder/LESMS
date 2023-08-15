@@ -15,7 +15,7 @@
     <link href="{{ asset("backend/assets/css/icons.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset("backend/assets/css/app.min.css") }}" id="app-style" rel="stylesheet" type="text/css" />
-
+    @yield('page-header-assets')
 </head>
 
 <body data-sidebar="dark">
@@ -219,9 +219,8 @@
                         <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
                         <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('adminlogout{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}').submit();"
-                            <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout
-                        </a>
+                        <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('adminlogout{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}').submit();">
+                            <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
                         <form action="{{route('admin.logout')}}" method="post" id="adminlogout{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}">@csrf
                         </form>
                     </div>
@@ -472,5 +471,8 @@
 
 <!-- App js -->
 <script src="{{ asset("backend/assets") }}/js/app.js"></script>
+
+@yield('page-footer-assets')
+
 </body>
 </html>

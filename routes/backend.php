@@ -7,7 +7,7 @@ use App\Http\Controllers\Backend\AdminAuthController;
 
 // Admin Auth Request
 Route::get('admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
-Route::post('admin/login', [AdminAuthController::class, 'authenticate'])->name('admin.login.post');
+Route::post('admin/login', [AdminAuthController::class, 'authenticate']);
 Route::post('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 // Admin Authorized Requests

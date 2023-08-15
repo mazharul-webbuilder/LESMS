@@ -12,6 +12,15 @@ class EcommerceController extends Controller
      */
     public function index(): View
     {
-        return view('frontend.ecommerce.products');
+        return view('frontend.ecommerce.product.products');
     }
+
+    /**
+     * View Ecommerce Product Details Page
+     */
+    public function productDetails(): View
+    {
+        return view('frontend.ecommerce.product.product-details');
+    }
+
 }

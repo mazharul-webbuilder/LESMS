@@ -23,4 +23,12 @@ class EcommerceController extends Controller
         return view('frontend.ecommerce.product.product-details');
     }
 
+    /**
+     * View Ecommerce Cart Page
+     */
+    public function cart(): View
+    {
+        return view('frontend.ecommerce.cart.cart');
+    }
+
 }

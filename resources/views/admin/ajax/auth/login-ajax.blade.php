@@ -15,6 +15,8 @@
                         window.location.href = '/admin/dashboard'
                     } else {
                         $('#AdminLoginError').text(response.message);
+
+                        // Clear previous error messages
                         $('.error-message').remove();
                     }
                 },

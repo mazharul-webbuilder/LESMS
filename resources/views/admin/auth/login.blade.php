@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="userpassword">Password</label>
-                                    <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" id="userpassword" placeholder="Enter password">
+                                    <input type="password" name="password" class="form-control" id="userpassword" placeholder="Enter password">
                                     <span class="error-message" id="password-error"></span>
                                 </div>
                                 <div class="custom-control custom-checkbox">

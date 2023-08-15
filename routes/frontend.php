@@ -23,3 +23,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+//Ecommerce routes
+require "ecommerce.php";
+//End Ecommerce Routes

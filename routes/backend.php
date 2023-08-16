@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\Ecommerce\ProductCategoryController;
+use App\Http\Controllers\Backend\Ecommerce\ProductBrandController;
 
 
 // Admin Auth Routes
@@ -28,7 +29,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::get('categories', [ProductCategoryController::class, 'categories'])->name('categories');
 
 //    Brand Module
-    Route::get('brands', [ProductCategoryController::class, 'brands'])->name('brands');
+    Route::get('brands', [ProductBrandController::class, 'brands'])->name('brands');
 
 //    Product Module
 

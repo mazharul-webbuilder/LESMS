@@ -25,8 +25,12 @@ Route::prefix('admin/')->name('admin.')->group(function (){
 // Ecommerce Module
 Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
 //    Category Module
+    Route::get('categories', [ProductCategoryController::class, 'categories'])->name('categories');
 
 //    Brand Module
+    Route::get('brands', [ProductCategoryController::class, 'brands'])->name('brands');
+
+//    Product Module
 
 //    Size Modules
 

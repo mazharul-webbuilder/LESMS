@@ -83,7 +83,7 @@
                             data: 'status',
                             name: 'status',
                             render: function (data) {
-                                return data === 1 ? 'Active' : 'Inactive';
+                                return data === 1 ? 'Active' : 'Disabled';
                             },
                             searchable: false,
                             orderable: false
@@ -106,7 +106,12 @@
                     data: {id: id},
                     dataType: 'json',
                     success: function (data) {
-                        $('.categoryName').text(data.name)
+                        $('.categoryName').text('Name :' + ' ' + data.name)
+                        $('.category-title').text('Title :' + ' ' + data.title)
+                        $('.category-image').attr('src', '{{asset("/")}}' + data.image);
+                        let status = data.status === 1 ? 'Active' : 'Disabled';
+                        $('.category-status').text('Status :' + ' ' + status);
+
 
                         $('.category-show-modal').modal('show');
 

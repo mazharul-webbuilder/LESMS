@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Model::unguard();
+
         $this->call(AdminSeeder::class);
+        $this->call(ProductCategorySeeder::class);
+
+        Model::reguard();
     }
 }

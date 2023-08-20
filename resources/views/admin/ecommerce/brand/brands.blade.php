@@ -75,17 +75,21 @@
                         },
                         {
                             data: 'image',
-                            name: 'image'
+                            name: 'image',
+                            searchable: false,
+                            orderable: false
                         },
                         {
                             data: 'status',
-                            name:'status'
+                            name:'status',
+                            searchable: false,
+                            orderable: false
                         },
                         {
                             data: 'action',
                             name: 'action',
                             orderable: false,
-                            searchable: true }
+                            searchable: false }
                     ]
                 });
             });

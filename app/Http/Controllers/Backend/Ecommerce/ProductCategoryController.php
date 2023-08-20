@@ -25,13 +25,18 @@ class ProductCategoryController extends Controller
         $categories = ProductCategory::select(['id', 'name', 'title', 'image', 'status']);
 
         return DataTables::of($categories)
+            ->addColumn('image', function ($category) {
+                return '<img src="'. asset('/') . $category->image . '" alt="' . $category->name . '" class="img-thumbnail" height="50px" width="50px">';
+            })
             ->addColumn('action', function ($category) {
                 return '
-                <button class="btn btn-primary view-btn" data-id="' . $category->id . '">View</button>
-                <button class="btn btn-warning edit-btn" data-id="' . $category->id . '">Edit</button>
-                <button class="btn btn-danger delete-btn" data-id="' . $category->id . '">Delete</button>
-            ';
+            <button class="btn btn-primary view-btn" data-id="' . $category->id . '">View</button>
+            <button class="btn btn-warning edit-btn" data-id="' . $category->id . '">Edit</button>
+            <button class="btn btn-danger delete-btn" data-id="' . $category->id . '">Delete</button>
+        ';
             })
+            ->rawColumns(['image', 'action'])
             ->make(true);
     }
+
 }

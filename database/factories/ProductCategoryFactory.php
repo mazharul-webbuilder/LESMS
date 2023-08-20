@@ -20,6 +20,7 @@ class ProductCategoryFactory extends Factory
             'name' => $this->faker->unique()->words(rand(1, 2), true),
             'slug' => $this->faker->unique()->slug(),
             'title' => $this->faker->words(rand(3, 5), true),
+            'image' => 'asset/img/demo.png'
         ];
     }
 }

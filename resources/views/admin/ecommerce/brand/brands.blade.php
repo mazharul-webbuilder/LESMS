@@ -41,7 +41,7 @@
                                     <th>Title</th>
                                     <th>Image</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -81,7 +81,10 @@
                         },
                         {
                             data: 'status',
-                            name:'status',
+                            name: 'status',
+                            render: function (data) {
+                                return data === 1 ? 'Active' : 'Inactive';
+                            },
                             searchable: false,
                             orderable: false
                         },
@@ -96,20 +99,40 @@
 
             // AJAX CRUD
             $('#ProductCategoryDataTable').on('click', '.view-btn', function () {
-                var userId = $(this).data('id');
-                // Perform AJAX request for viewing user details
+                const id = $(this).data('id');
+                $.ajax({
+                    url: '{{ route('admin.category.show') }}',
+                    type: 'GET',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.categoryName').text(data.name)
+
+                        $('.category-show-modal').modal('show');
+
+                    }
+                })
             });
 
             $('#ProductCategoryDataTable').on('click', '.edit-btn', function () {
-                var userId = $(this).data('id');
-                // Perform AJAX request for editing user details
+                const id = $(this).data('id');
+
+
+                // Set the modal title
+                $('#categoryModalTitle').text(categoryName);
+
+                // Show the modal
+                $('.view-btn').attr('data-toggle', 'modal');
+                $('.bs-example-modal-center').modal('show');
             });
 
+
             $('#ProductCategoryDataTable').on('click', '.delete-btn', function () {
-                var userId = $(this).data('id');
-                // Perform AJAX request for deleting user
+                const id = $(this).data('id');
             });
         </script>
 @endsection
+
+@include('admin.ecommerce.category.view_modal')
 
 

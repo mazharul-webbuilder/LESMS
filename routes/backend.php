@@ -28,6 +28,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
 //    Category Module
     Route::get('categories', [ProductCategoryController::class, 'categories'])->name('categories');
     Route::get('category-all', [ProductCategoryController::class, 'allCategories'])->name('category.all');
+    Route::get('get-category', [ProductCategoryController::class, 'getCategory'])->name('category.show');
 
 //    Brand Module
     Route::get('brands', [ProductBrandController::class, 'brands'])->name('brands');

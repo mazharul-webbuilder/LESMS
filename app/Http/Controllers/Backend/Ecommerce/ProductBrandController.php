@@ -91,4 +91,25 @@ class ProductBrandController extends Controller
             ]);
         }
     }
+    /**
+     * Brand Edit data get
+    **/
+    public function edit(Request $request)
+    {
+        try {
+            $brand = ProductBrand::select('name', 'slogan', 'logo','status')->find($request->id);
+            return response()->json([
+                'message' => 'Data Found',
+                'status' => Response::HTTP_OK,
+                'type' => 'success',
+            ], Response::HTTP_OK);
+
+        } catch (QueryException $e) {
+            return response()->json([
+              'message' => $e->getMessage(),
+              'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error',
+            ]);
+        }
+    }
 }

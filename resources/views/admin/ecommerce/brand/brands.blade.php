@@ -128,19 +128,24 @@
                 })
             });
 
+            /*Edit Button*/
             $('#datatable_item').on('click', '.edit-btn', function () {
                 const id = $(this).data('id');
+                $.ajax({
+                    url: '{{ route('admin.brand.edit') }}',
+                    type: 'GET',
+                    data: {id: id},
+                    success: function (data) {
+                        if (data.status === 200) {
+                            $('.brandEditModal').modal('show');
+                        }
+                    }
+                })
 
-
-                // Set the modal title
-                $('#categoryModalTitle').text(categoryName);
-
-                // Show the modal
-                $('.view-btn').attr('data-toggle', 'modal');
-                $('.bs-example-modal-center').modal('show');
             });
 
 
+            /*Delete Button*/
             $('#datatable_item').on('click', '.delete-btn', function () {
                 const id = $(this).data('id');
             });
@@ -163,7 +168,7 @@
                     success: function (data) {
                         if (data.status ===200) {
                             $('#datatable_item').DataTable().ajax.reload();
-                            $('#brandAddModal').modal('hide');
+                            $('.modal_dismiss').trigger('click')
                             Toast.fire({
                                 icon: data.type,
                                 title: data.message

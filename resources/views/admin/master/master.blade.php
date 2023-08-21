@@ -466,8 +466,8 @@
 <script src="{{ asset("backend/assets") }}/libs/simplebar/simplebar.min.js"></script>
 <script src="{{ asset("backend/assets") }}/libs/node-waves/waves.min.js"></script>
 
-<!-- apexcharts -->
-<script src="{{ asset("backend/assets") }}/libs/apexcharts/apexcharts.min.js"></script>
+{{--<!-- apexcharts -->--}}
+{{--<script src="{{ asset("backend/assets") }}/libs/apexcharts/apexcharts.min.js"></script>--}}
 
 <script src="{{ asset("backend/assets") }}/js/pages/dashboard.init.js"></script>
 
@@ -476,6 +476,22 @@
 
 {{--Datatable assets--}}
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+</script>
+
 
 
 @yield('page-footer-assets')

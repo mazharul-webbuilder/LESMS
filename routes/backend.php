@@ -34,6 +34,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::get('brands', [ProductBrandController::class, 'brands'])->name('brands');
     Route::get('brand-all', [ProductBrandController::class, 'allBrands'])->name('brands.all');
     Route::get('get-brand', [ProductBrandController::class, 'getBrand'])->name('brand.show');
+    Route::post('brand-store', [ProductBrandController::class,'store'])->name('brand.store');
 
 //    Product Module
 

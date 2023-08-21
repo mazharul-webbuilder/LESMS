@@ -29,11 +29,16 @@
                         <div class="card-header" style="background-color: #504099">
                             <div class="page-title-box d-flex align-items-center justify-content-between pb-0">
                                 <h4 class="mb-0 font-size-18 text-light">Brands</h4>
-                                <button class="btn text-light" style="background-color: #313866">Add New Brand <i class="fas fa-plus"></i></button>
+                                <button
+                                    type="button"
+                                    data-toggle="modal"
+                                    data-target="#brandAddModal"
+                                    class="btn text-light"
+                                    style="background-color: #313866"><Add></Add> New Brand <i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="ProductBrandDataTable" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <table id="datatable_item" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="text-center" style="background-color: #45CFDD;">
                                 <tr>
                                     <th>SL</th>
@@ -56,7 +61,7 @@
 @section('page-footer-assets')
         <script>
             $(document).ready(function () {
-                var dataTable = $('#ProductBrandDataTable').DataTable({
+                var dataTable = $('#datatable_item').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{{ route('admin.brands.all') }}',
@@ -150,8 +155,55 @@
                 const id = $(this).data('id');
             });
         </script>
+
+        {{--Add Brand--}}
+        <script>
+            const brandAddForm = $('#brandAddForm')
+            brandAddForm.submit(function (event) {
+                event.preventDefault();
+                $('#brandAddError').text('')
+
+                const formData = new FormData(brandAddForm[0]);
+                $.ajax({
+                    url: '{{ route('admin.brand.store') }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status ===200) {
+                            $('#datatable_item').DataTable().ajax.reload();
+                            $('#brandAddModal').modal('hide');
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+
+                            // Clear previous error messages
+                            $('.error-message').remove();
+
+                            // Display error messages for each input field
+                            Object.keys(errors).forEach(function(field) {
+                                const errorMessage = errors[field][0];
+                                const inputField = $('[name="' + field + '"]');
+                                inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                            });
+
+                        } else {
+                            console.log('An error occurred:', status, error);
+                        }
+                    }
+                })
+            })
+        </script>
 @endsection
 
 @include('admin.ecommerce.brand.view_modal')
+@include('admin.ecommerce.brand.add_modal')
 
 

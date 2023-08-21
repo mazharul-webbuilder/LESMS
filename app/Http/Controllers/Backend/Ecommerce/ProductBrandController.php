@@ -35,7 +35,6 @@ class ProductBrandController extends Controller
             ->get();
 
         return DataTables::of($brands)
-            ->addColumn('serial', '')
             ->addColumn('logo', function ($brand) {
                 return '<img src="'. asset('/') . $brand->logo . '" alt="' . $brand->name . '" class="img-thumbnail" height="50px" width="50px">';
             })
@@ -48,7 +47,7 @@ class ProductBrandController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['logo', 'action', 'serial'])
+            ->rawColumns(['logo', 'action'])
             ->make(true);
     }
     /**

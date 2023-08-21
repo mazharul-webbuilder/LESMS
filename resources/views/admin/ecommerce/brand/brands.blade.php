@@ -41,7 +41,7 @@
                             <table id="datatable_item" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="text-center" style="background-color: #45CFDD;">
                                 <tr>
-                                    <th>SL</th>
+                                    <th>Id</th>
                                     <th>Name</th>
                                     <th>Slogan</th>
                                     <th>Logo</th>
@@ -65,15 +65,13 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{{ route('admin.brands.all') }}',
-                    order: [[1, "desc"]], // Assuming you want to order by 'name' in descending order
+                    order: [[0, "desc"]],
                     columns: [
                         {
-                            data: null,
+                            data: 'id',
+                            name: 'id',
                             searchable: false,
-                            orderable: false,
-                            render: function (data, type, row, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1;
-                            }
+                            orderable: true,
                         },
                         {
                             data: 'name',
@@ -106,18 +104,10 @@
                         }
                     ]
                 });
-
-                // Re-draw the table to update the serial numbers when a new page is displayed
-                dataTable.on('draw.dt', function () {
-                    var info = dataTable.page.info();
-                    dataTable.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
-                        cell.innerHTML = i + 1 + info.start;
-                    });
-                });
             });
 
             // AJAX CRUD
-            $('#ProductBrandDataTable').on('click', '.view-btn', function () {
+            $('#datatable_item').on('click', '.view-btn', function () {
                 const id = $(this).data('id');
                 $.ajax({
                     url: '{{ route('admin.brand.show') }}',
@@ -138,7 +128,7 @@
                 })
             });
 
-            $('#ProductBrandDataTable').on('click', '.edit-btn', function () {
+            $('#datatable_item').on('click', '.edit-btn', function () {
                 const id = $(this).data('id');
 
 
@@ -151,7 +141,7 @@
             });
 
 
-            $('#ProductBrandDataTable').on('click', '.delete-btn', function () {
+            $('#datatable_item').on('click', '.delete-btn', function () {
                 const id = $(this).data('id');
             });
         </script>

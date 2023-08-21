@@ -33,13 +33,13 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="ProductCategoryDataTable" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <table id="ProductBrandDataTable" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="text-center" style="background-color: #45CFDD;">
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
+                                    <th>Slogan</th>
+                                    <th>Logo</th>
                                     <th>Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -56,10 +56,11 @@
 @section('page-footer-assets')
         <script>
             $(document).ready(function () {
-                $('#ProductCategoryDataTable').DataTable({
+                $('#ProductBrandDataTable').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{{ route('admin.category.all') }}',
+                    ajax: '{{ route('admin.brands.all') }}',
+                    order: [[ 0, "desc" ]],
                     columns: [
                         {
                             data: 'id',
@@ -70,12 +71,12 @@
                             name: 'name'
                         },
                         {
-                            data: 'title',
-                            name: 'title'
+                            data: 'slogan',
+                            name: 'slogan'
                         },
                         {
-                            data: 'image',
-                            name: 'image',
+                            data: 'logo',
+                            name: 'logo',
                             searchable: false,
                             orderable: false
                         },
@@ -98,28 +99,28 @@
             });
 
             // AJAX CRUD
-            $('#ProductCategoryDataTable').on('click', '.view-btn', function () {
+            $('#ProductBrandDataTable').on('click', '.view-btn', function () {
                 const id = $(this).data('id');
                 $.ajax({
-                    url: '{{ route('admin.category.show') }}',
+                    url: '{{ route('admin.brand.show') }}',
                     type: 'GET',
                     data: {id: id},
                     dataType: 'json',
                     success: function (data) {
-                        $('.categoryName').text('Name :' + ' ' + data.name)
-                        $('.category-title').text('Title :' + ' ' + data.title)
-                        $('.category-image').attr('src', '{{asset("/")}}' + data.image);
+                        $('.brandName').text('Brand Name :' + ' ' + data.name)
+                        $('.brand-slogan').text('Slogan :' + ' ' + data.slogan)
+                        $('.brand-image').attr('src', '{{asset("/")}}' + data.logo);
                         let status = data.status === 1 ? 'Active' : 'Disabled';
-                        $('.category-status').text('Status :' + ' ' + status);
+                        $('.brand-status').text('Status :' + ' ' + status);
 
 
-                        $('.category-show-modal').modal('show');
+                        $('.brand-show-modal').modal('show');
 
                     }
                 })
             });
 
-            $('#ProductCategoryDataTable').on('click', '.edit-btn', function () {
+            $('#ProductBrandDataTable').on('click', '.edit-btn', function () {
                 const id = $(this).data('id');
 
 
@@ -132,12 +133,12 @@
             });
 
 
-            $('#ProductCategoryDataTable').on('click', '.delete-btn', function () {
+            $('#ProductBrandDataTable').on('click', '.delete-btn', function () {
                 const id = $(this).data('id');
             });
         </script>
 @endsection
 
-@include('admin.ecommerce.category.view_modal')
+@include('admin.ecommerce.brand.view_modal')
 
 

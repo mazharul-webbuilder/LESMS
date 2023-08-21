@@ -15,7 +15,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Categories</li>
+                                <li class="breadcrumb-item active">Brands</li>
                             </ol>
                         </div>
 
@@ -28,8 +28,8 @@
                     <div class="card" style="border: 1px solid #504099">
                         <div class="card-header" style="background-color: #504099">
                             <div class="page-title-box d-flex align-items-center justify-content-between pb-0">
-                                <h4 class="mb-0 font-size-18 text-light">Categories</h4>
-                                <button class="btn text-light" style="background-color: #313866">Add Category <i class="fas fa-plus"></i></button>
+                                <h4 class="mb-0 font-size-18 text-light">Brands</h4>
+                                <button class="btn text-light" style="background-color: #313866">Add New Brand <i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="card-body">

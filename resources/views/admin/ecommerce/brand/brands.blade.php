@@ -36,7 +36,7 @@
                             <table id="ProductBrandDataTable" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="text-center" style="background-color: #45CFDD;">
                                 <tr>
-                                    <th>Id</th>
+                                    <th>SL</th>
                                     <th>Name</th>
                                     <th>Slogan</th>
                                     <th>Logo</th>
@@ -56,15 +56,19 @@
 @section('page-footer-assets')
         <script>
             $(document).ready(function () {
-                $('#ProductBrandDataTable').DataTable({
+                var dataTable = $('#ProductBrandDataTable').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{{ route('admin.brands.all') }}',
-                    order: [[ 0, "desc" ]],
+                    order: [[1, "desc"]], // Assuming you want to order by 'name' in descending order
                     columns: [
                         {
-                            data: 'id',
-                            name: 'id'
+                            data: null,
+                            searchable: false,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
                         },
                         {
                             data: 'name',
@@ -93,8 +97,17 @@
                             data: 'action',
                             name: 'action',
                             orderable: false,
-                            searchable: false }
+                            searchable: false
+                        }
                     ]
+                });
+
+                // Re-draw the table to update the serial numbers when a new page is displayed
+                dataTable.on('draw.dt', function () {
+                    var info = dataTable.page.info();
+                    dataTable.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1 + info.start;
+                    });
                 });
             });
 

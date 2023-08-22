@@ -8,6 +8,8 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset("asset") }}/img/favicon.ico">
+{{--    Multiple Select--}}
+
 
     <!-- Bootstrap Css -->
     <link href="{{ asset("backend/assets/css/bootstrap.min.css") }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -465,6 +467,7 @@
 <script src="{{ asset("backend/assets") }}/libs/metismenu/metisMenu.min.js"></script>
 <script src="{{ asset("backend/assets") }}/libs/simplebar/simplebar.min.js"></script>
 <script src="{{ asset("backend/assets") }}/libs/node-waves/waves.min.js"></script>
+
 
 {{--<!-- apexcharts -->--}}
 {{--<script src="{{ asset("backend/assets") }}/libs/apexcharts/apexcharts.min.js"></script>--}}

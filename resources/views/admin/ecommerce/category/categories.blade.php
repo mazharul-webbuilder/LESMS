@@ -2,6 +2,9 @@
 @section('title')
     Categories | {{ config('app.name') }}
 @endsection
+@section('page-header-assets')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
@@ -29,7 +32,13 @@
                         <div class="card-header" style="background-color: #504099">
                             <div class="page-title-box d-flex align-items-center justify-content-between pb-0">
                                 <h4 class="mb-0 font-size-18 text-light">Categories</h4>
-                                <button class="btn text-light" style="background-color: #313866">Add Category <i class="fas fa-plus"></i></button>
+                                <button
+                                    type="button"
+                                    data-toggle="modal"
+                                    data-target="#AddModal"
+                                    class="btn text-light"
+                                    id="AddButton"
+                                    style="background-color: #313866">Add Category <i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -52,13 +61,25 @@
 
         </div> <!-- container-fluid -->
     </div>
+    @include('admin.ecommerce.category.add_modal')
+    @include('admin.ecommerce.category.edit_modal')
+    @include('admin.ecommerce.category.view_modal')
 @endsection
 @section('page-footer-assets')
+{{--    select 2--}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(".js-example-responsive").select2({
+            width: 'resolve' // need to override the changed default
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             $('#ProductCategoryDataTable').DataTable({
                 processing: true,
                 serverSide: true,
+                order: [[0, "desc"]],
                 ajax: '{{ route('admin.category.all') }}',
                 columns: [
                     {
@@ -97,7 +118,7 @@
             });
         });
 
-        // AJAX CRUD
+        // View Button
         $('#ProductCategoryDataTable').on('click', '.view-btn', function () {
             const id = $(this).data('id');
             $.ajax({
@@ -119,6 +140,7 @@
             })
         });
 
+        // Edit Button
         $('#ProductCategoryDataTable').on('click', '.edit-btn', function () {
             const id = $(this).data('id');
 
@@ -131,11 +153,59 @@
             $('.bs-example-modal-center').modal('show');
         });
 
-
+        /*Delete Button*/
         $('#ProductCategoryDataTable').on('click', '.delete-btn', function () {
             const id = $(this).data('id');
         });
     </script>
+
+{{--    ADD Button--}}
+    <script>
+    const AddForm = $('#AddForm')
+    AddForm.submit(function (event) {
+        event.preventDefault();
+        $('#AddError').text('')
+
+        const formData = new FormData(AddForm[0]);
+        $.ajax({
+            url: '{{ route('admin.category.store') }}',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 200) {
+                    $('#ProductCategoryDataTable').DataTable().ajax.reload();
+                    $('.modal_dismiss').trigger('click')
+                    Toast.fire({
+                        icon: data.type,
+                        title: data.message
+                    })
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('error')
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+
+                    // Clear previous error messages
+                    $('.error-message').remove();
+
+                    // Display error messages for each input field
+                    Object.keys(errors).forEach(function(field) {
+                        const errorMessage = errors[field][0];
+                        const inputField = $('[name="' + field + '"]');
+                        inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                    });
+
+                } else {
+                    console.log('An error occurred:', status, error);
+                }
+            }
+        })
+    })
+</script>
+
 @endsection
 
-@include('admin.ecommerce.category.view_modal')

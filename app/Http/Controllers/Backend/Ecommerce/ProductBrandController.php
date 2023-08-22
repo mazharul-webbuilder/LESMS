@@ -152,4 +152,30 @@ class ProductBrandController extends Controller
             ]);
         }
     }
+    /**
+     * Delete  Product Brand
+    **/
+    public function delete(Request $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+            $brand = ProductBrand::find($request->id);
+            $brand->delete();
+            DB::commit();
+
+            return response()->json([
+             'message' => 'Successfully Deleted',
+             'status' => Response::HTTP_OK,
+                'type' =>'success'
+            ], Response::HTTP_OK);
+
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return response()->json([
+             'message' => $e->getMessage(),
+             'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error',
+            ]);
+        }
+    }
 }

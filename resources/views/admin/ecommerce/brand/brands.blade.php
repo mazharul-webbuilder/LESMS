@@ -155,6 +155,33 @@
             /*Delete Button*/
             $('#datatable_item').on('click', '.delete-btn', function () {
                 const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('admin.brand.delete') }}',
+                            type: 'GET',
+                            data: {id: id},
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status === 200) {
+                                    Toast.fire({
+                                        icon: data.type,
+                                        title: data.message
+                                    })
+                                    $('#datatable_item').DataTable().ajax.reload();
+                                }
+                            }
+                        })
+                    }
+                })
             });
         </script>
 

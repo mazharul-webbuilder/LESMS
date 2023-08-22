@@ -37,7 +37,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::post('brand-store', [ProductBrandController::class,'store'])->name('brand.store');
     Route::get('brand-edit', [ProductBrandController::class, 'edit'])->name('brand.edit');
     Route::post('brand-update', [ProductBrandController::class, 'update'])->name('brand.update');
-    Route::post('brand-delete/{id}', [ProductBrandController::class, 'destroy'])->name('brand.delete');
+    Route::get('brand-delete', [ProductBrandController::class, 'delete'])->name('brand.delete');
 
 
 //    Product Module

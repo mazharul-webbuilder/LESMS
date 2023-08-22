@@ -137,6 +137,7 @@
                     data: {id: id},
                     success: function (data) {
                         if (data.status === 200) {
+                            $('#brandId').val(data.brand.id)
                             $('#name').val(data.brand.name)
                             $('#slogan').val(data.brand.slogan)
                             $('#logo').attr('src', '{{asset("/")}}' + data.brand.logo)
@@ -175,6 +176,51 @@
                         if (data.status ===200) {
                             $('#datatable_item').DataTable().ajax.reload();
                             $('.modal_dismiss').trigger('click')
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+
+                            // Clear previous error messages
+                            $('.error-message').remove();
+
+                            // Display error messages for each input field
+                            Object.keys(errors).forEach(function(field) {
+                                const errorMessage = errors[field][0];
+                                const inputField = $('[name="' + field + '"]');
+                                inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                            });
+
+                        } else {
+                            console.log('An error occurred:', status, error);
+                        }
+                    }
+                })
+            })
+        </script>
+        {{--Update Brand--}}
+        <script>
+            const updateForm = $('#updateForm')
+            updateForm.submit(function (event) {
+                event.preventDefault();
+                $('#brandAddError').text('')
+
+                const formData = new FormData(updateForm[0]);
+                $.ajax({
+                    url: '{{ route('admin.brand.update') }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status ===200) {
+                            $('#datatable_item').DataTable().ajax.reload();
+                            $('.modal_dismiss_edit').trigger('click')
                             Toast.fire({
                                 icon: data.type,
                                 title: data.message

@@ -98,7 +98,7 @@ class ProductBrandController extends Controller
     public function edit(Request $request): JsonResponse
     {
         try {
-            $brand = ProductBrand::select('name', 'slogan', 'logo','status')->find($request->id);
+            $brand = ProductBrand::select('id', 'name', 'slogan', 'logo','status')->find($request->id);
             return response()->json([
                 'message' => 'Data Found',
                 'status' => Response::HTTP_OK,
@@ -107,6 +107,44 @@ class ProductBrandController extends Controller
             ], Response::HTTP_OK);
 
         } catch (QueryException $e) {
+            return response()->json([
+              'message' => $e->getMessage(),
+              'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error',
+            ]);
+        }
+    }
+
+    /**
+     * Update  Product Brand
+    **/
+    public function update(Request $request): JsonResponse
+    {
+            $request->validate([
+            'name' => 'required|string|min:2|max:30',
+            'slogan' => 'nullable|min:8|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        try {
+            DB::beginTransaction();
+            $brand = ProductBrand::find($request->id);
+            if ($request->hasFile('image')) {
+                $storagePath = 'images/admin/brand';
+                $request->merge([
+                    'logo' => AdminHelper::getImageFilePath($request, $storagePath),
+                ]);
+            }
+            $brand->update($request->only('name', 'slogan', 'logo', 'status'));
+            DB::commit();
+
+            return response()->json([
+              'message' => 'Successfully Updated',
+              'status' => Response::HTTP_OK,
+                'type' =>'success'
+            ], Response::HTTP_OK);
+
+        } catch (QueryException $e) {
+            DB::rollBack();
             return response()->json([
               'message' => $e->getMessage(),
               'status' => Response::HTTP_INTERNAL_SERVER_ERROR,

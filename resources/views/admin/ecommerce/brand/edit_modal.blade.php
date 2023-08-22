@@ -3,16 +3,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="modal_dismiss">&times;</span>
+                    <span aria-hidden="true" class="modal_dismiss_edit">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title mb-4 text-center">Edit Brand</h2>
-                        <form id="brandAddForm" action="" method="POST" enctype="multipart/form-data">
+                        <form id="updateForm" action="" method="POST" enctype="multipart/form-data">
                             <p class="text-center alert-danger" id="brandAddError"></p>
                             @csrf
+                            <input type="hidden" id="brandId" name="id">
                             <div class="form-group row mb-4">
                                 <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Name*</label>
                                 <div class="col-sm-9">

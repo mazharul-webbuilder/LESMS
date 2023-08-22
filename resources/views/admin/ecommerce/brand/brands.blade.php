@@ -137,7 +137,13 @@
                     data: {id: id},
                     success: function (data) {
                         if (data.status === 200) {
-                            $('.brandEditModal').modal('show');
+                            $('#name').val(data.brand.name)
+                            $('#slogan').val(data.brand.slogan)
+                            $('#logo').attr('src', '{{asset("/")}}' + data.brand.logo)
+                            $('#item_status').val(data.brand.status)
+
+
+                            $('.brand_edit_modal').modal('show');
                         }
                     }
                 })
@@ -200,5 +206,6 @@
 
 @include('admin.ecommerce.brand.view_modal')
 @include('admin.ecommerce.brand.add_modal')
+@include('admin.ecommerce.brand.edit_modal')
 
 

@@ -8,6 +8,7 @@ use App\Http\Requests\ProductBrandAddRequest;
 use App\Models\ProductBrand;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class ProductBrandController extends Controller
      * Return All Product Brands
      * Using Yajra Package
     **/
-    public function allbrands()
+    public function allBrands(): JsonResponse
     {
         $brands = ProductBrand::select(['id', 'name', 'slogan', 'logo', 'status'])
             ->orderByDesc('id')
@@ -53,7 +54,7 @@ class ProductBrandController extends Controller
     /**
      * Show  Product Brand
     **/
-    public function getBrand(Request $request)
+    public function getBrand(Request $request): JsonResponse
     {
         $brand = ProductBrand::select('id', 'name', 'slogan', 'logo', 'status')->find($request->id);
 
@@ -62,7 +63,7 @@ class ProductBrandController extends Controller
     /**
      * Store  Product Brand
     **/
-    public function store(ProductBrandAddRequest $request)
+    public function store(ProductBrandAddRequest $request): JsonResponse
     {
         try {
             DB::BeginTransaction();
@@ -94,7 +95,7 @@ class ProductBrandController extends Controller
     /**
      * Brand Edit data get
     **/
-    public function edit(Request $request)
+    public function edit(Request $request): JsonResponse
     {
         try {
             $brand = ProductBrand::select('name', 'slogan', 'logo','status')->find($request->id);
@@ -102,6 +103,7 @@ class ProductBrandController extends Controller
                 'message' => 'Data Found',
                 'status' => Response::HTTP_OK,
                 'type' => 'success',
+                'brand' => $brand
             ], Response::HTTP_OK);
 
         } catch (QueryException $e) {

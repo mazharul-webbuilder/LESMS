@@ -46,6 +46,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::get('products', [ProductController::class, 'products'])->name('products');
     Route::get('product-all', [ProductController::class, 'allProducts'])->name('products.all');
     Route::get('product-create', [ProductController::class, 'createView'])->name('product.create');
+    Route::post('product-store', [ProductController::class,'store'])->name('product.store');
 
 
 

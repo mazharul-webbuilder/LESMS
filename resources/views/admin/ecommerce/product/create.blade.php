@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title mb-4">Product Crate</h4>
 
-                        <form method="POST" action="" enctype="multipart/form-data">
+                        <form method="POST" id="AddForm" action="" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -77,7 +77,7 @@
                             <div class="row" >
                                 <div class="col-lg-12">
                                     <div class="form-group ">
-                                        <label for="formrow-email-input">Short Description</label>
+                                        <label for="formrow-email-input">Short Description*</label>
                                         <input type="text" name="short_description" class="form-control" placeholder="Ex: This is my product short description">
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group ">
-                                        <label for="formrow-email-input">Full Description</label>
+                                        <label for="formrow-email-input">Full Description*</label>
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
@@ -117,6 +117,7 @@
 @section('page-footer-assets')
     <script>
        $(document).ready(function(){
+           /*rich text editor*/
            tinymce.init({
                selector: 'textarea',
                plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
@@ -129,6 +130,47 @@
                ],
                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
            });
+           /*End rich text editor*/
+
+           // product add
+           const AddForm = $('#AddForm')
+           AddForm.submit(function (event) {
+               event.preventDefault();
+               $('#AddError').text('')
+
+               const formData = new FormData(AddForm[0]);
+               $.ajax({
+                   url: '{{ route('admin.product.store') }}',
+                   type: 'POST',
+                   data: formData,
+                   contentType: false,
+                   processData: false,
+                   success: function (data) {
+                       if (data.status === 200) {
+                           window.location.href = "{{ route('admin.products') }}";
+                       }
+                   },
+                   error: function(xhr, status, error) {
+                       console.log('error')
+                       if (xhr.status === 422) {
+                           const errors = xhr.responseJSON.errors;
+
+                           // Clear previous error messages
+                           $('.error-message').remove();
+
+                           // Display error messages for each input field
+                           Object.keys(errors).forEach(function(field) {
+                               const errorMessage = errors[field][0];
+                               const inputField = $('[name="' + field + '"]');
+                               inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                           });
+
+                       } else {
+                           console.log('An error occurred:', status, error);
+                       }
+                   }
+               })
+           })
        })
     </script>
 @endsection

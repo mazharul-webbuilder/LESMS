@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Backend\Ecommerce;
 
+use App\Helpers\AdminHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductAddRequest;
 use App\Models\Product;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
 
@@ -50,5 +56,39 @@ class ProductController extends Controller
      public function createView(): View
      {
          return \view('admin.ecommerce.product.create');
+     }
+
+    /**
+     * Store Product
+     */
+     public function store(ProductAddRequest $request): JsonResponse
+     {
+         try {
+             DB::beginTransaction();
+             $storagePath = 'images/admin/product';
+
+             $request->merge([
+                 'slug' => Str::slug($request->name),
+                 'product_code' => AdminHelper::generateUniqueCode(),
+                 'thumbnail_image' => AdminHelper::getImageFilePath($request,$storagePath),
+             ]);
+
+             Product::create($request->all());
+
+             DB::commit();
+             return response()->json([
+               'message' => 'Product Added Successfully',
+               'status' => Response::HTTP_OK,
+                'type' => 'success'
+             ]);
+
+         } catch ( QueryException $e) {
+             DB::rollBack();
+             return response()->json([
+               'message' => $e->getMessage(),
+               'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+               'type' => 'error'
+             ]);
+         }
      }
 }

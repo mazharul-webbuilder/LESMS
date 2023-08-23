@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\Product;
+use Illuminate\Support\Str;
+
 class AdminHelper
 {
 
@@ -15,5 +18,17 @@ class AdminHelper
             return $storage_path. '/'. $image_name;
         }
         return null;
+    }
+
+    public static function generateUniqueCode($length = 8)
+    {
+        $code = Str::random($length, '0123456789');
+
+        // Make sure the code is unique in your database
+        while (Product::where('product_code', $code)->first()) {
+            $code = Str::random($length, '0123456789');
+        }
+
+        return $code;
     }
 }

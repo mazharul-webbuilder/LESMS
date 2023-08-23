@@ -271,7 +271,7 @@
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="{{route('admin.categories')}}">Categories</a></li>
                             <li><a href="{{route('admin.brands')}}">Brands</a></li>
-                            <li><a href="#">Products</a></li>
+                            <li><a href="{{ route('admin.products') }}">Products</a></li>
                             <li><a href="#">Size</a></li>
                             <li><a href="#">Cart</a></li>
                             <li><a href="#">Orders</a></li>

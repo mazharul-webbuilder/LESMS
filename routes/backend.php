@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Backend\Ecommerce\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\AdminAuthController;
@@ -42,6 +43,12 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
 
 
 //    Product Module
+    Route::get('products', [ProductController::class, 'products'])->name('products');
+    Route::get('product-all', [ProductController::class, 'allProducts'])->name('products.all');
+    Route::get('product-create', [ProductController::class, 'createView'])->name('product.create');
+
+
+
 
 //    Size Modules
 

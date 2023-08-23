@@ -15,13 +15,32 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('title');
+            $table->string('product_code');
+            $table->string('short_description');
+            $table->unsignedBigInteger('product_category_id')->nullable();
+            $table->unsignedBigInteger('product_brand_id')->nullable();
             $table->string('description');
             $table->string('thumbnail_image');
-            $table->double('purchase_price');
-            $table->double('sale_price');
+            $table->double('previous_price', 10, 2)->nullable();
+            $table->double('current_price', 10, 2);
+            $table->double('purchase_price', 10, 2)->nullable();
             $table->integer('minimum_order_quantity')->default(1);
+            $table->text('privacy_policy')->nullable();
+            $table->text('return_policy')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('flash_deal')->default(0);
+            $table->tinyInteger('featured')->default(0);
+            $table->tinyInteger('best_sale')->default(0);
+            $table->tinyInteger('trending')->default(0);
+            $table->tinyInteger('recent_product')->default(0);
+            $table->tinyInteger('seo')->default(1);
+            $table->text('tags')->nullable();
+            $table->text('meta_tags')->nullable();
+            $table->text('meta_description')->nullable();
             $table->timestamps();
+
+            $table->foreign('product_category_id')->references('id')->on('product_categories');
+            $table->foreign('product_brand_id')->references('id')->on('product_brands');
         });
     }
 

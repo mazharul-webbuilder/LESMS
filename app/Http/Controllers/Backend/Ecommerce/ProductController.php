@@ -43,4 +43,12 @@ class ProductController extends Controller
             ->make(true);
 
     }
+
+     /**
+     * Show Product Create Page
+    */
+     public function createView(): View
+     {
+         return \view('admin.ecommerce.product.create');
+     }
 }

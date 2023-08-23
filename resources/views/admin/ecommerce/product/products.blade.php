@@ -1,6 +1,6 @@
 @extends('admin.master.master')
 @section('title')
-    Products {{ config('app.name') }}
+    Products | {{ config('app.name') }}
 @endsection
 @section('content')
     <div class="page-content">
@@ -67,7 +67,7 @@
             // End Redirect to Product Create Page
 
             // Load DataTable
-            var dataTable = $('#datatable_item').DataTable({
+            const dataTable = $('#datatable_item').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('admin.products.all') }}',

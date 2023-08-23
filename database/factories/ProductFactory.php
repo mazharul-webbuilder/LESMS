@@ -93,7 +93,7 @@ class ProductFactory extends Factory
             'product_code' => AdminHelper::generateUniqueCode(),
             'short_description' => $this->faker->sentence(6),
             'description' => $this->faker->text(200),
-            'thumbnail_image' => 'asset/img/demo.png',
+            'thumbnail_image' => 'asset/img/demo-product.jpg',
             'previous_price' => $this->faker->randomFloat(2, 10, 100),
             'current_price' => $this->faker->randomFloat(2, 5, 50),
             'purchase_price' => $this->faker->randomFloat(2, 3, 30),

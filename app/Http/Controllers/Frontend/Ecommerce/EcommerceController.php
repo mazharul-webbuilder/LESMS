@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Ecommerce;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Contracts\View\View;
 
 class EcommerceController extends Controller
@@ -12,7 +13,9 @@ class EcommerceController extends Controller
      */
     public function index(): View
     {
-        return view('frontend.ecommerce.product.products');
+        $products = Product::paginate(12);
+
+        return view('frontend.ecommerce.product.products', compact('products'));
     }
 
     /**

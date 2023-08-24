@@ -56,6 +56,7 @@
     </div>
 @endsection
 @include('admin.ecommerce.size.add')
+@include('admin.ecommerce.size.edit')
 @section('page-footer-assets')
     <script>
         $(document).ready(function () {
@@ -116,6 +117,74 @@
                     }
                 })
             })
+
+            /*View Size*/
+            $('#size_datatable').on('click', '.edit-btn', function(){
+                const id = $(this).data('id');
+                $.ajax({
+                    url: '{{ route('admin.size.edit') }}',
+                    type: 'GET',
+                    data: {id: id},
+                    success: function (data) {
+                        if (data.status === 200) {
+                            $('#edit_id').val(data.data.id);
+                            $('#edit_name').val(data.data.name);
+                            $('#editModal').modal('show');
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Something went wrong'
+                            })
+                        }
+
+                    },
+                })
+            })
+
+            /*Update Size*/
+            const updateForm = $('#editForm')
+            updateForm.submit(function (event) {
+                event.preventDefault();
+                $('#updateError').text('')
+
+                const formData = new FormData(updateForm[0]);
+                $.ajax({
+                    url: '{{ route('admin.size.update') }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status ===200) {
+                            $('#size_datatable').DataTable().ajax.reload();
+                            $('.modal_dismiss_edit').trigger('click')
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+
+                            // Clear previous error messages
+                            $('.error-message').remove();
+
+                            // Display error messages for each input field
+                            Object.keys(errors).forEach(function(field) {
+                                const errorMessage = errors[field][0];
+                                const inputField = $('[name="' + field + '"]');
+                                inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                            });
+
+                        } else {
+                            console.log('An error occurred:', status, error);
+                        }
+                    }
+                })
+            })
+
 
 
         });

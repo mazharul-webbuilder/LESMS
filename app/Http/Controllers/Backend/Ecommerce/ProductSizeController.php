@@ -46,6 +46,11 @@ class ProductSizeController extends Controller
             ->make(true);
     }
 
+
+    /**
+     * Store new Size into the database
+     * and return Json response
+    */
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -64,6 +69,52 @@ class ProductSizeController extends Controller
             return response()->json([
               'status' => Response::HTTP_OK,
               'message' => 'Size added successfully',
+                'type' => 'success'
+            ], Response::HTTP_OK);
+
+        } catch ( QueryException $e) {
+            DB::rollBack();
+            return response()->json([
+              'message' => $e->getMessage(),
+              'success' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Get size data to update
+    */
+    public function edit(Request $request): JsonResponse
+    {
+        $size = Size::select('id', 'name')->find($request->id);
+
+        return response()->json([
+            'data' => $size,
+          'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
+    }
+    /**
+     * Update size data
+    */
+    public function update(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' =>'required|unique:sizes,name,'. $request->id
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $size = Size::find($request->id);
+            $size->name = $request->name;
+            $size->save();
+
+            DB::commit();
+
+            return response()->json([
+              'status' => Response::HTTP_OK,
+              'message' => 'Size updated successfully',
                 'type' => 'success'
             ], Response::HTTP_OK);
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\Ecommerce\ProductCategoryController;
 use App\Http\Controllers\Backend\Ecommerce\ProductBrandController;
+use App\Http\Controllers\Backend\Ecommerce\ProductSizeController;
+
 
 
 // Admin Auth Routes
@@ -48,10 +50,10 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::get('product-create', [ProductController::class, 'createView'])->name('product.create');
     Route::post('product-store', [ProductController::class,'store'])->name('product.store');
 
-
-
-
 //    Size Modules
+    Route::get('sizes', [ProductSizeController::class, 'sizes'])->name('sizes');
+    Route::get('sizes-all', [ProductSizeController::class, 'allSizes'])->name('sizes.all');
+
 
 //    Product Module
 

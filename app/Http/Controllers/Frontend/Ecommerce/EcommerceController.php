@@ -13,7 +13,7 @@ class EcommerceController extends Controller
      */
     public function index(): View
     {
-        $products = Product::paginate(12);
+        $products = Product::latest()->paginate(12);
 
         return view('frontend.ecommerce.product.products', compact('products'));
     }

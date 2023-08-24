@@ -7,8 +7,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card " style="margin-bottom: 0px!important;">
+                    <div class="card-body mb-0 pb-0">
                         <h2 class="card-title mb-4 text-center">Stock Management</h2>
                         <form id="addForm" action="" method="POST">
                             @csrf
@@ -35,6 +35,17 @@
 
                     </div>
                 </div>
+                <section class="pb-5 pt-0">
+                    <table id="stock_datatable_item" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead class="text-center" style="background-color: #BEADFA;">
+                        <tr>
+                            <th>Size</th>
+                            <th>In Stock</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </section>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

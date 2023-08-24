@@ -140,8 +140,41 @@
                         $.each(sizes, function (index, size) {
                             sizeDropdown.append('<option value="' + size.id + '">' + size.name + '</option>');
                         });
+
+                        /*Show datatable*/
+                        const stockDt = $('#stock_datatable_item').DataTable({
+                            processing: true,
+                            serverSide: true,
+                            searching: false,
+                            lengthChange: false,
+                            ajax: {
+                                url: '{{ route('admin.stock.all') }}',
+                                data: {
+                                    productId: productId
+                                },
+                            },
+                            order: [[0, "desc"]],
+                            columns: [
+                                {
+                                    data: 'size_name',
+                                    name: 'size_name'
+                                },
+                                {
+                                    data: 'quantity',
+                                    name: 'quantity',
+                                    searchable: true,
+                                    orderable: true,
+                                },
+                                {
+                                    data: 'action',
+                                    name: 'action',
+                                    orderable: false,
+                                    searchable: false
+                                }
+                            ]
+                        });
                     }
-                })
+                });
 
                 $('.stock-modal').modal('show');
             })

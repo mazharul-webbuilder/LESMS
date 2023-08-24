@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     use HasFactory;
+
+    protected $table = 'stocks';
+
+    protected $fillable = [
+        'product_id',
+        'quantity',
+        'size_id'
+    ];
+
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
 }

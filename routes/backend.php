@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\Ecommerce\ProductCategoryController;
 use App\Http\Controllers\Backend\Ecommerce\ProductBrandController;
 use App\Http\Controllers\Backend\Ecommerce\ProductSizeController;
+use App\Http\Controllers\Backend\Ecommerce\ProductStockController;
 
 
 
@@ -59,9 +60,8 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::post('size-update', [ProductSizeController::class, 'update'])->name('size.update');
     Route::get('size-delete', [ProductSizeController::class, 'delete'])->name('size.delete');
 
-
-
-//    Product Module
+//    Stock Module
+    Route::get('get-all-stock', [ProductStockController::class, 'getStocks'])->name('stock.all');
 
 //    Cart Module
 

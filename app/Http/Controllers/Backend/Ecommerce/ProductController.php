@@ -6,6 +6,7 @@ use App\Helpers\AdminHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductAddRequest;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -97,5 +98,13 @@ class ProductController extends Controller
                'type' => 'error'
              ]);
          }
+     }
+
+     /**
+      * returns all sizes
+     */
+     public function allSizes(): JsonResponse
+     {
+         return \response()->json(Size::select(['id','name'])->get());
      }
 }

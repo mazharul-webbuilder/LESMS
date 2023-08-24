@@ -126,17 +126,24 @@
             $('#datatable_item').on('click', '.stock-btn', function () {
                 const productId =$(this).data('id');
                 $.ajax({
-                    {{--url: '{{ route('admin.product.all.sizes') }}',--}}
+                    url: '{{ route('admin.product.all.sizes') }}',
                     method: 'get',
                     data: { id: productId },
-                    success: function (data) {
+                    success: function (sizes) {
+                        const sizeDropdown = $('#productSizeDropdown');
 
+                        $('#productId').val(productId)
 
-                        $('.stock-modal').modal('show')
+                        sizeDropdown.empty();
+                        sizeDropdown.append('<option value="">Select Size</option>');
+
+                        $.each(sizes, function (index, size) {
+                            sizeDropdown.append('<option value="' + size.id + '">' + size.name + '</option>');
+                        });
                     }
                 })
 
-
+                $('.stock-modal').modal('show');
             })
             /*End Stock Mange*/
 

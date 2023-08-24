@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <select name="size_id" id="productSizeDropdown" class="form-control">
-                                        <option value="">Select Size</option>
+                                        {{--Option will appear dynamicaly by AJAX--}}
                                     </select>
                                 </div>
                                 <div class="col-md-5">

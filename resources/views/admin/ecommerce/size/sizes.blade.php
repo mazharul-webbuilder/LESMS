@@ -185,6 +185,43 @@
                 })
             })
 
+            /*Delete*/
+            $('#size_datatable').on('click', '.delete-btn', function(){
+                const id = $(this).data('id')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('admin.size.delete') }}',
+                            type: 'GET',
+                            data: {id: id},
+                            success: function (data) {
+                                if (data.status === 200) {
+                                    $('#size_datatable').DataTable().ajax.reload();
+                                    Toast.fire({
+                                        icon: data.type,
+                                        title: data.message
+                                    })
+                                } else {
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: 'Something went wrong'
+                                    })
+                                }
+                            },
+                        })
+                    }
+                })
+
+            })
+
 
 
         });

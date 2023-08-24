@@ -127,4 +127,25 @@ class ProductSizeController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    /**
+     * Delete size data
+    */
+    public function delete(Request $request): JsonResponse
+    {
+        $size = Size::find($request->id);
+        if ($size->delete()) {
+            return response()->json([
+              'status' => Response::HTTP_OK,
+              'message' => 'Size deleted successfully',
+                'type' =>'success'
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+             'status' => Response::HTTP_BAD_REQUEST,
+             'message' => 'Something went wrong',
+                'type' => 'error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
 }

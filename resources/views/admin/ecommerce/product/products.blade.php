@@ -63,13 +63,13 @@
     <script>
         $(document).ready(function () {
             // Redirect to Product Create Page
-            $('#addProduct').on('click', function(){
+            $('#addProduct').on('click', function () {
                 window.location.href = "{{ route('admin.product.create') }}";
-            })
+            });
             // End Redirect to Product Create Page
 
-            // Load DataTable
-            const dataTable = $('#datatable_item').DataTable({
+            // Initialize the main DataTable
+            const mainDataTable = $('#datatable_item').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('admin.products.all') }}',
@@ -120,11 +120,17 @@
                     }
                 ]
             });
-            // End Load DataTable
 
-            /*Stock Manage*/
+            let stockDt; // Declare a variable to hold the stock DataTable instance
+
+            /* Stock Manage */
             $('#datatable_item').on('click', '.stock-btn', function () {
-                const productId =$(this).data('id');
+                const productId = $(this).data('id');
+
+                if ($.fn.DataTable.isDataTable('#stock_datatable_item')) {
+                    $('#stock_datatable_item').DataTable().destroy();
+                }
+
                 $.ajax({
                     url: '{{ route('admin.product.all.sizes') }}',
                     method: 'get',
@@ -132,7 +138,7 @@
                     success: function (sizes) {
                         const sizeDropdown = $('#productSizeDropdown');
 
-                        $('#productId').val(productId)
+                        $('#productId').val(productId);
 
                         sizeDropdown.empty();
                         sizeDropdown.append('<option value="">Select Size</option>');
@@ -141,8 +147,8 @@
                             sizeDropdown.append('<option value="' + size.id + '">' + size.name + '</option>');
                         });
 
-                        /*Show datatable*/
-                        const stockDt = $('#stock_datatable_item').DataTable({
+                        /* Show stock DataTable */
+                        stockDt = $('#stock_datatable_item').DataTable({
                             processing: true,
                             serverSide: true,
                             searching: false,
@@ -177,9 +183,8 @@
                 });
 
                 $('.stock-modal').modal('show');
-            })
-            /*End Stock Mange*/
-
+            });
+            /* End Stock Manage */
         });
 
     </script>

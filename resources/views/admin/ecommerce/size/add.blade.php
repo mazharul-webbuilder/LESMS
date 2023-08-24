@@ -1,4 +1,4 @@
-<div id="brandAddModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,28 +9,14 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title mb-4 text-center">Add New Brand</h2>
-                        <form id="brandAddForm" action="" method="POST" enctype="multipart/form-data">
+                        <h2 class="card-title mb-4 text-center">Add Size</h2>
+                        <form id="addForm" action="" method="POST">
                             <p class="text-center alert-danger" id="brandAddError"></p>
                             @csrf
                             <div class="form-group row mb-4">
                                 <label for="horizontal-firstname-input" class="col-sm-3 col-form-label">Name*</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="horizontal-firstname-input" placeholder="Ex: Walton" name="name">
-                                    <span class="error-message" id="email-error"></span>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <label for="horizontal-email-input" class="col-sm-3 col-form-label">Slogan</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="horizontal-email-input" placeholder="Ex: Product of own country" name="slogan">
-                                    <span class="error-message" id="email-error"></span>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <label for="horizontal-password-input" class="col-sm-3 col-form-label">Logo</label>
-                                <div class="col-sm-9">
-                                    <input type="file" class="form-control" id="horizontal-password-input" name="image">
+                                    <input type="text" class="form-control" id="horizontal-firstname-input" placeholder="Ex: L" name="name">
                                     <span class="error-message" id="email-error"></span>
                                 </div>
                             </div>

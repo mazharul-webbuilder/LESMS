@@ -55,12 +55,14 @@
         </div> <!-- container-fluid -->
     </div>
 @endsection
+@include('admin.ecommerce.size.add')
 @section('page-footer-assets')
     <script>
         $(document).ready(function () {
             $('#size_datatable').DataTable({
                 processing: true,
                 serverSide: true,
+                order: [[0, "desc"]],
                 ajax: '{{route('admin.sizes.all')}}',
                 columns: [
                     {data: 'id', name: 'id'},
@@ -68,6 +70,54 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });
+
+            /*Add Size*/
+            const AddForm = $('#addForm')
+            AddForm.submit(function (event) {
+                event.preventDefault();
+                $('#AddError').text('')
+
+                const formData = new FormData(AddForm[0]);
+                $.ajax({
+                    url: '{{ route('admin.size.store') }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.status === 200) {
+                            $('#size_datatable').DataTable().ajax.reload();
+                            $('.modal_dismiss').trigger('click')
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('error')
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+
+                            // Clear previous error messages
+                            $('.error-message').remove();
+
+                            // Display error messages for each input field
+                            Object.keys(errors).forEach(function(field) {
+                                const errorMessage = errors[field][0];
+                                const inputField = $('[name="' + field + '"]');
+                                inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                            });
+
+                        } else {
+                            console.log('An error occurred:', status, error);
+                        }
+                    }
+                })
+            })
+
+
         });
     </script>
 @endsection

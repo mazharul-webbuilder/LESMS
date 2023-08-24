@@ -53,6 +53,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
 //    Size Modules
     Route::get('sizes', [ProductSizeController::class, 'sizes'])->name('sizes');
     Route::get('sizes-all', [ProductSizeController::class, 'allSizes'])->name('sizes.all');
+    Route::post('size-store', [ProductSizeController::class, 'store'])->name('size.store');
 
 
 //    Product Module

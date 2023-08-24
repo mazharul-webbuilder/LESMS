@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Js;
 use Yajra\DataTables\DataTables;
 
 
@@ -42,5 +44,36 @@ class ProductSizeController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|unique:sizes,name'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $size = new Size();
+            $size->name = $request->name;
+            $size->save();
+
+            DB::commit();
+
+            return response()->json([
+              'status' => Response::HTTP_OK,
+              'message' => 'Size added successfully',
+                'type' => 'success'
+            ], Response::HTTP_OK);
+
+        } catch ( QueryException $e) {
+            DB::rollBack();
+            return response()->json([
+              'message' => $e->getMessage(),
+              'success' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

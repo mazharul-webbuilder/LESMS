@@ -38,7 +38,9 @@ class ProductController extends Controller
             })
             ->addColumn('stock_management', function ($product) {
                 return '
-                <button class="btn stock-btn" style="background-color: #BEADFA" data-id="' . $product->id . '">Stock</button>
+                     <div class="text-center">
+                        <button class="btn stock-btn" style="background-color: #BEADFA" data-id="' . $product->id . '">Stock</button>
+                    </div>
                 ';
             })
             ->addColumn('action', function ($product) {

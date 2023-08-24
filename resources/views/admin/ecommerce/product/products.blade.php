@@ -44,7 +44,7 @@
                                     <th>Name</th>
                                     <th>Thumbnail</th>
                                     <th>Current Price</th>
-                                    <th>Stock Manage</th>
+                                    <th class="text-center">Stock Manage</th>
                                     <th>Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -58,6 +58,7 @@
         </div> <!-- container-fluid -->
     </div>
 @endsection
+@include('admin.ecommerce.product.stock_add_modal')
 @section('page-footer-assets')
     <script>
         $(document).ready(function () {
@@ -120,6 +121,24 @@
                 ]
             });
             // End Load DataTable
+
+            /*Stock Manage*/
+            $('#datatable_item').on('click', '.stock-btn', function () {
+                const productId =$(this).data('id');
+                $.ajax({
+                    {{--url: '{{ route('admin.product.all.sizes') }}',--}}
+                    method: 'get',
+                    data: { id: productId },
+                    success: function (data) {
+
+
+                        $('.stock-modal').modal('show')
+                    }
+                })
+
+
+            })
+            /*End Stock Mange*/
 
         });
 

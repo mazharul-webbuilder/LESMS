@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Ecommerce;
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Yajra\DataTables\DataTables;
 
 class ProductStockController extends Controller
@@ -26,12 +27,29 @@ class ProductStockController extends Controller
             ->addColumn('action', function ($stock) {
                 return '
                 <div class="text-center">
-                    <button class="btn btn-danger delete-btn" data-id="' . $stock->id . '">Delete</button>
+                    <button class="btn btn-danger stock-delete-btn" data-id="' . $stock->id . '">Delete</button>
                 </div>
             ';
             })
             ->rawColumns(['action', 'size_name'])
             ->make(true);
+    }
+
+    /**
+     * Delete a stock
+    */
+    public function delete(Request $request)
+    {
+        $stockId = (int) $request->id;
+
+        $stock = Stock::find($stockId);
+        $stock->delete();
+
+        return response()->json([
+            'message' => 'Stock deleted successfully',
+            'status' => Response::HTTP_OK,
+            'type' => 'success',
+        ]);
     }
 
 }

@@ -185,6 +185,39 @@
                 $('.stock-modal').modal('show');
             });
             /* End Stock Manage */
+
+            /*Stock Delete*/
+            $('#stock_datatable_item').on('click', '.stock-delete-btn', function (){
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('admin.stock.delete') }}',
+                            type: 'GET',
+                            data: {id: id},
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status === 200) {
+                                    Toast.fire({
+                                        icon: data.type,
+                                        title: data.message
+                                    })
+                                    $('#stock_datatable_item').DataTable().ajax.reload();
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+            /*End Stock Decelte*/
         });
 
     </script>

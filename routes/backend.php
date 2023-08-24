@@ -62,6 +62,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
 
 //    Stock Module
     Route::get('get-all-stock', [ProductStockController::class, 'getStocks'])->name('stock.all');
+    Route::get('stock-delete', [ProductStockController::class, 'delete'])->name('stock.delete');
 
 //    Cart Module
 

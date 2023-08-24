@@ -36,6 +36,11 @@ class ProductController extends Controller
             ->addColumn('thumbnail_image', function ($product) {
                 return '<img src="'. asset('/') . $product->thumbnail_image . '" alt="' . $product->name . '" class="img-thumbnail" height="50px" width="50px">';
             })
+            ->addColumn('stock_management', function ($product) {
+                return '
+                <button class="btn stock-btn" style="background-color: #BEADFA" data-id="' . $product->id . '">Stock</button>
+                ';
+            })
             ->addColumn('action', function ($product) {
                 return '
                 <div class="text-center">
@@ -45,7 +50,7 @@ class ProductController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['thumbnail_image', 'action'])
+            ->rawColumns(['thumbnail_image', 'action', 'stock_management'])
             ->make(true);
 
     }

@@ -44,6 +44,7 @@
                                     <th>Name</th>
                                     <th>Thumbnail</th>
                                     <th>Current Price</th>
+                                    <th>Stock Manage</th>
                                     <th>Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -92,6 +93,12 @@
                     {
                         data: 'current_price',
                         name: 'current_price',
+                        searchable: false,
+                        orderable: false
+                    },
+                    {
+                        data: 'stock_management',
+                        name: 'stock_management',
                         searchable: false,
                         orderable: false
                     },

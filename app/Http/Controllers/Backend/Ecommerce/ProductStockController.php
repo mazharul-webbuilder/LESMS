@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Backend\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class ProductStockController extends Controller
@@ -33,6 +36,37 @@ class ProductStockController extends Controller
             })
             ->rawColumns(['action', 'size_name'])
             ->make(true);
+    }
+
+    /**
+     * Store Stock
+    */
+    public function store(Request $request): JsonResponse
+        {
+            $request->validate([
+            'product_id' => 'required',
+            'size_id' => 'required',
+            'quantity' => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
+            Stock::create($request->all());
+            DB::commit();
+
+            return response()->json([
+                'status' => Response::HTTP_OK,
+              'type' => 'success',
+              'message' => 'Stock added successfully'
+            ], Response::HTTP_OK);
+
+        } catch ( QueryException $e ) {
+            DB::rollBack();
+            return response()->json([
+              'staus' => Response::HTTP_INTERNAL_SERVER_ERROR,
+              'type' => 'error',
+              'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**

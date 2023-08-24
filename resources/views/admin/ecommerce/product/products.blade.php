@@ -186,6 +186,49 @@
             });
             /* End Stock Manage */
 
+            /*Stock Add*/
+            const stockAddForm = $('#StockAddForm')
+            stockAddForm.submit(function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(stockAddForm[0]);
+                $.ajax({
+                    url: '{{ route('admin.stock.store') }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.status ===200) {
+                            $('#stock_datatable_item').DataTable().ajax.reload();
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 422) {
+                            const errors = xhr.responseJSON.errors;
+
+                            // Clear previous error messages
+                            $('.error-message').remove();
+
+                            // Display error messages for each input field
+                            Object.keys(errors).forEach(function(field) {
+                                const errorMessage = errors[field][0];
+                                const inputField = $('[name="' + field + '"]');
+                                inputField.after('<span class="error-message text-danger">' + errorMessage + '</span>');
+                            });
+
+                        } else {
+                            console.log('An error occurred:', status, error);
+                        }
+                    }
+                })
+            })
+            /*End Stock Add*/
+
             /*Stock Delete*/
             $('#stock_datatable_item').on('click', '.stock-delete-btn', function (){
                 const id = $(this).data('id');

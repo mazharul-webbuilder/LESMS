@@ -10,7 +10,7 @@
                 <div class="card " style="margin-bottom: 0px!important;">
                     <div class="card-body mb-0 pb-0">
                         <h2 class="card-title mb-4 text-center">Stock Management</h2>
-                        <form id="addForm" action="" method="POST">
+                        <form id="StockAddForm" action="" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" id="productId">
                             <div class="row">
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group row mb-4">
-                                        <input type="text" class="form-control" id="horizontal-firstname-input" placeholder="Stock Ex: 15" name="quantity">
+                                        <input type="number" class="form-control" id="horizontal-firstname-input" placeholder="Stock Ex: 15" name="quantity">
                                         <span class="error-message" id="email-error"></span>
                                     </div>
                                 </div>

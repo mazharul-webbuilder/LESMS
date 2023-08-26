@@ -204,6 +204,8 @@
                     processData: false,
                     success: function (data) {
                         if (data.status ===200) {
+                            $('#productSizeDropdown').val('')
+                            $('#stockQuantity').val('')
                             $('#stock_datatable_item').DataTable().ajax.reload();
                             Toast.fire({
                                 icon: data.type,
@@ -234,13 +236,16 @@
             /*End Stock Add*/
             /*Stock Edit*/
             $('#stock_datatable_item').on('click', '.stock-edit-btn', function(){
-                const id = $(this).data('id')
+                const id = $(this).data('id') // stockId
                 $.ajax({
                     url: '{{ route('admin.stock.edit') }}',
                     method: 'get',
                     data: { id: id },
                     success: function (data) {
-                        $('#productSizeDropdown').val(data.size.id)
+                        console.log(data);
+                        if (data.size_id != null) {
+                            $('#productSizeDropdown').val(data.size.id)
+                        }
                         $('#stockQuantity').val(data.quantity)
                         $('#stockId').val(data.id)
 
@@ -258,6 +263,7 @@
                                 success: function (data) {
                                     if (data.status ===200) {
                                         $('#stockId').val('')
+                                        $('#productSizeDropdown').val('')
                                         $('#stock_datatable_item').DataTable().ajax.reload();
                                         Toast.fire({
                                             icon: data.type,

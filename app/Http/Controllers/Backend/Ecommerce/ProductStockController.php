@@ -51,25 +51,29 @@ class ProductStockController extends Controller
         {
             $request->validate([
             'product_id' => 'required',
-            'size_id' => 'required',
+            'size_id' => 'nullable',
             'quantity' => 'required',
         ]);
         /* Check where it is store or update request */
         $stockId = (int) $request->stock_id;
-        if ($stockId) {
+
+        if ($stockId || Stock::where('product_id', $request->product_id)->where('size_id', '')->exists()) {
             $stock = Stock::find($stockId);
-        } elseif (Stock::where('product_id', $request->product_id)->where('size_id', $request->size_id)->exists()) {
+        } elseif(Stock::where('product_id', $request->product_id)->where('size_id', $request->size_id)->exists()) {
             return response()->json([
-              'message' => 'Stock already exists',
-              'status' => Response::HTTP_OK,
-                'type' => 'error', ]);
-        } else {
+                'message' => 'Stock already exists',
+                'status' => Response::HTTP_OK,
+                'type' => 'error',
+            ]);
+        }
+        else {
             $stock = new Stock();
         }
 
         try {
             DB::beginTransaction();
             // Update or create the stock record
+
             $stock->fill($request->all());
             $stock->save();
             DB::commit();

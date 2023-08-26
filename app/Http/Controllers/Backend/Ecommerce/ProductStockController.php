@@ -54,6 +54,11 @@ class ProductStockController extends Controller
         $stockId = (int) $request->stock_id;
         if ($stockId) {
             $stock = Stock::find($stockId);
+        } elseif (Stock::where('product_id', $request->product_id)->where('size_id', $request->size_id)->exists()) {
+            return response()->json([
+              'message' => 'Stock already exists',
+              'status' => Response::HTTP_OK,
+                'type' => 'error', ]);
         } else {
             $stock = new Stock();
         }

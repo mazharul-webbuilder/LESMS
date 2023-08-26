@@ -40,6 +40,7 @@
                     <table id="stock_datatable_item" class="table table-bordered dt-responsive nowrap bg-white" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead class="text-center" style="background-color: #BEADFA;">
                         <tr>
+                            <th>P-Name</th>
                             <th>Size</th>
                             <th>In Stock</th>
                             <th class="text-center">Action</th>

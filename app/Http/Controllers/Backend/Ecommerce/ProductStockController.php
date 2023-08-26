@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class ProductStockController extends Controller
@@ -25,8 +26,11 @@ class ProductStockController extends Controller
             ->get();
 
         return DataTables::of($stocks)
+            ->addColumn('product_name', function ($stock){
+                return Str::limit($stock->product->name, '10', '...');
+            })
             ->addColumn('size_name', function ($stock) {
-                return $stock->size->name; // Access the size_name through the relationship
+                return $stock->size ? $stock->size->name : ''; // Access the size_name through the relationship
             })
             ->addColumn('action', function ($stock) {
                 return '

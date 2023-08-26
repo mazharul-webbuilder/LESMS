@@ -159,8 +159,12 @@
                                     productId: productId
                                 },
                             },
-                            order: [[0, "desc"]],
+                            order: [[0, "asc"]],
                             columns: [
+                                {
+                                    data: 'product_name',
+                                    name: 'product_name',
+                                },
                                 {
                                     data: 'size_name',
                                     name: 'size_name'

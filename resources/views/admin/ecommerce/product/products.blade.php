@@ -45,7 +45,7 @@
                                     <th>Thumbnail</th>
                                     <th>Current Price</th>
                                     <th class="text-center">Stock Manage</th>
-                                    <th>Status</th>
+                                    <th  class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                                 </thead>

@@ -6,6 +6,20 @@
     <script src="https://cdn.tiny.cloud/1/gpri4wsj1pc87hfxaqzix76t8y94ljhqcbfypun5a8nfdq94/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 @endsection
 @section('content')
+    <style>
+        #image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .preview-image {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     <div class="page-content">
         <div class="container-fluid">
                 <div class="card">
@@ -74,6 +88,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="galleryImage">Gallery Images</label>
+                                        <input type="file" id="images" name="images[]" multiple accept="image/*" class="form-control">
+                                        <div id="image-container"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row" >
                                 <div class="col-lg-12">
                                     <div class="form-group ">
@@ -83,27 +106,24 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label for="formrow-email-input">Full Description*</label>
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" >
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label for="formrow-email-input">Privacy Policy</label>
                                         <textarea name="privacy_policy" ></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group ">
                                         <label for="formrow-email-input">Return Policy</label>
                                         <textarea name="return_policy"></textarea>
                                     </div>
                                 </div>
-
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary w-lg">Add</button>
@@ -115,6 +135,24 @@
     </div>
 @endsection
 @section('page-footer-assets')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const imagesInput = document.getElementById("images");
+            const imageContainer = document.getElementById("image-container");
+
+            imagesInput.addEventListener("change", function () {
+                imageContainer.innerHTML = "";
+
+                const files = imagesInput.files;
+                for (const file of files) {
+                    const img = document.createElement("img");
+                    img.src = URL.createObjectURL(file);
+                    img.classList.add("preview-image");
+                    imageContainer.appendChild(img);
+                }
+            });
+        });
+    </script>
     <script>
        $(document).ready(function(){
            /*rich text editor*/

@@ -106,9 +106,9 @@
                     {
                         data: 'status',
                         name: 'status',
-                        render: function (data) {
-                            return data === 1 ? 'Active' : 'Disabled';
-                        },
+                        // render: function (data) {
+                        //     return data === 1 ? 'Active' : 'Disabled';
+                        // },
                         searchable: false,
                         orderable: false
                     },
@@ -321,6 +321,30 @@
                 })
             })
             /*End Stock Decelte*/
+
+            /*Product Status Control*/
+            $('#datatable_item').on('change', '.status-select', function(){
+                const newStatus = $(this).val();
+                $.ajax({
+                    url: '{{ route('admin.product.status') }}',
+                    type: 'GET',
+                    data: {
+                        id: $(this).data('id'), // id of product
+                        newStatus: newStatus
+                    },
+                    success: function (data) {
+                        if (data.status === 200) {
+                            Toast.fire({
+                                icon: data.type,
+                                title: data.message
+                            })
+                            $('#datatable_item').DataTable().ajax.reload();
+                        }
+                    }
+                })
+
+            })
+            /*End Product Status Control*/
         });
 
     </script>

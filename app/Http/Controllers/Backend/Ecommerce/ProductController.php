@@ -34,9 +34,11 @@ class ProductController extends Controller
         $products = Product::all();
 
         return DataTables::of($products)
+            /*Thumbnail Image Column*/
             ->addColumn('thumbnail_image', function ($product) {
                 return '<img src="'. asset('/') . $product->thumbnail_image . '" alt="' . $product->name . '" class="img-thumbnail" height="50px" width="50px">';
             })
+            /*Stock Management Column*/
             ->addColumn('stock_management', function ($product) {
                 return '
                      <div class="text-center">
@@ -44,6 +46,23 @@ class ProductController extends Controller
                     </div>
                 ';
             })
+            /*Status Column*/
+            ->addColumn('status', function ($product) {
+                $statusOptions = [
+                    1 => 'Published',
+                    0 => 'Unpublished',
+                ];
+
+                $statusSelect = '<select class="status-select form-control" style="background: #FFE5E5" data-id="' . $product->id . '">';
+                foreach ($statusOptions as $value => $label) { // $value = array_key && $label = published or unpublished
+                    $selected = $product->status == $value ? 'selected' : '';
+                    $statusSelect .= '<option value="' . $value . '" ' . $selected . '>' . $label . '</option>';
+                }
+                $statusSelect .= '</select>';
+
+                return $statusSelect;
+            })
+            /*Action Column*/
             ->addColumn('action', function ($product) {
                 return '
                 <div class="text-center">
@@ -53,7 +72,7 @@ class ProductController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['thumbnail_image', 'action', 'stock_management'])
+            ->rawColumns(['thumbnail_image', 'action', 'stock_management', 'status'])
             ->make(true);
 
     }
@@ -106,5 +125,36 @@ class ProductController extends Controller
      public function allSizes(): JsonResponse
      {
          return \response()->json(Size::select(['id','name'])->get());
+     }
+
+     /**
+      * Change Product current Status
+      *
+     */
+     public function changeProductStatus(Request $request)
+     {
+         try {
+             DB::beginTransaction();
+             $product = Product::find($request->id);
+             $product->status = $request->newStatus;
+             $product->save();
+             DB::commit();
+
+             return response()->json([
+                 'message' => 'Status Changed Successfully',
+                 'status' => Response::HTTP_OK,
+                 'type' => 'success',
+             ], Response::HTTP_OK);
+         } catch (QueryException $e) {
+             DB::rollBack();
+
+             return response()->json([
+                'message' => $e->getMessage(),
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                 'type' => 'error',
+             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+
+         }
+
      }
 }

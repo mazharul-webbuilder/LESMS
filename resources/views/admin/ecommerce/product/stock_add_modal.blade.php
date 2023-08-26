@@ -13,6 +13,7 @@
                         <form id="StockAddForm" action="" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" id="productId">
+                            <input type="hidden" name="stock_id" id="stockId">
                             <div class="row">
                                 <div class="col-md-5">
                                     <select name="size_id" id="productSizeDropdown" class="form-control">
@@ -21,13 +22,13 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group row mb-4">
-                                        <input type="number" class="form-control" id="horizontal-firstname-input" placeholder="Stock Ex: 15" name="quantity">
+                                        <input type="number" class="form-control" id="stockQuantity" placeholder="Stock Ex: 15" name="quantity">
                                         <span class="error-message" id="email-error"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group row justify-content-end">
-                                        <button type="submit"class="btn btn-primary" style="background-color: #504099!important;">Add</button>
+                                        <button type="submit"class="btn btn-primary" style="background-color: #504099!important;">Submit</button>
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,8 @@ class ProductStockController extends Controller
     /**
      * Return all stocks by product
     */
-    public function getStocks(Request $request) {
+    public function getStocks(Request $request) : JsonResponse
+    {
         $productId = (int) $request->productId;
 
         $stocks = Stock::where('product_id', $productId)
@@ -30,6 +31,7 @@ class ProductStockController extends Controller
             ->addColumn('action', function ($stock) {
                 return '
                 <div class="text-center">
+                    <button class="btn btn-warning stock-edit-btn" data-id="' . $stock->id . '">Edit</button>
                     <button class="btn btn-danger stock-delete-btn" data-id="' . $stock->id . '">Delete</button>
                 </div>
             ';
@@ -41,22 +43,32 @@ class ProductStockController extends Controller
     /**
      * Store Stock
     */
-    public function store(Request $request): JsonResponse
+    public function storeOrUpdate(Request $request): JsonResponse
         {
             $request->validate([
             'product_id' => 'required',
             'size_id' => 'required',
             'quantity' => 'required',
         ]);
+        /* Check where it is store or update request */
+        $stockId = (int) $request->stock_id;
+        if ($stockId) {
+            $stock = Stock::find($stockId);
+        } else {
+            $stock = new Stock();
+        }
+
         try {
             DB::beginTransaction();
-            Stock::create($request->all());
+            // Update or create the stock record
+            $stock->fill($request->all());
+            $stock->save();
             DB::commit();
 
             return response()->json([
                 'status' => Response::HTTP_OK,
               'type' => 'success',
-              'message' => 'Stock added successfully'
+              'message' => $stockId ? 'Stock updated successfully' : 'Stock Added successfully'
             ], Response::HTTP_OK);
 
         } catch ( QueryException $e ) {
@@ -67,6 +79,20 @@ class ProductStockController extends Controller
               'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    /**
+     * Get stock data to Edit
+    */
+    public function edit(Request $request): JsonResponse
+    {
+        $stockId = (int) $request->id;
+
+        $stock = Stock::where('id', $stockId)
+            ->with('size')
+            ->first();
+
+        return response()->json($stock, Response::HTTP_OK);
     }
 
     /**

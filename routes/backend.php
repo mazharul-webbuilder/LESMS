@@ -52,6 +52,7 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::post('product-store', [ProductController::class,'store'])->name('product.store');
     Route::get('product-delete', [ProductController::class,'delete'])->name('product.delete');
     Route::get('product-edit/{id}', [ProductController::class,'edit'])->name('product.edit');
+    Route::post('product-update', [ProductController::class,'update'])->name('product.update');
     Route::get('all-sizes', [ProductController::class,'allSizes'])->name('product.all.sizes');
     Route::get('change-product-status', [ProductController::class,'changeProductStatus'])->name('product.status'); // Change ProductStatus
 

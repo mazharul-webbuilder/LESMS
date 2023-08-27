@@ -133,6 +133,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="id" value="{{$product->id}}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group ">
@@ -195,15 +196,15 @@
             });
             /*End rich text editor*/
 
-            // product add
-            const AddForm = $('#AddForm')
-            AddForm.submit(function (event) {
+            // product Update
+            const UpdateForm = $('#UpdateForm')
+            UpdateForm.submit(function (event) {
                 event.preventDefault();
                 $('#AddError').text('')
 
-                const formData = new FormData(AddForm[0]);
+                const formData = new FormData(UpdateForm[0]);
                 $.ajax({
-                    url: '{{ route('admin.product.store') }}',
+                    url: '{{ route('admin.product.update') }}',
                     type: 'POST',
                     data: formData,
                     contentType: false,
@@ -214,7 +215,7 @@
                                 icon: data.type,
                                 title: data.message
                             })
-                            $('#AddForm')[0].reset();
+                            $('#UpdateForm')[0].reset();
                             $('#image-container').hide(2000);
                         }
                     },

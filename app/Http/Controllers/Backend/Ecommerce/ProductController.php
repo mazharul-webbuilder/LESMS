@@ -136,6 +136,68 @@ class ProductController extends Controller
     }
 
     /**
+     * Update an existing product
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+              'name'  =>'required|unique:sizes,name,'. $request->id,
+            'product_category_id' => 'nullable|integer|exists:product_categories,id',
+            'product_brand_id' => 'nullable|integer|exists:product_brands,id',
+            'purchase_price' => 'nullable|numeric|min:0',
+            'current_price' => 'required|numeric|min:0',
+            'minimum_order_quantity' => 'required|integer|min:1',
+            'image' => 'image|max:2048',
+            'short_description' => 'required|string|max:500',
+            'description' => 'required|string',
+            'privacy_policy' => 'nullable|string',
+            'return_policy' => 'nullable|string',
+        ]);
+        try {
+            DB::beginTransaction();
+
+            $product = Product::find($request->id);
+
+            if ($request->hasFile('image')) {
+                $thumbnailFilename = $product->thumbnail_image;
+                $this->deleteImages('images/admin/product/', $thumbnailFilename);
+                $request->merge([
+                    'thumbnail_image' => $this->storeThumbnail($request)
+                ]);
+            }
+            if ($request->hasFile('galleryImages')) {
+                // Delete gallery images
+                $galleryImages = Gallery::where('product_id', $product->id)->get();
+                foreach ($galleryImages as $galleryImage) {
+                    $galleryFilename = $galleryImage->image;
+                    $this->deleteImages('images/admin/gallery/', $galleryFilename);
+                    $galleryImage->delete();
+                }
+                $this->storeGalleryImages($request, $product->id );
+            }
+
+            $product->update($request->all());
+
+            $product->update($request->all());
+
+            DB::commit();
+            return \response()->json([
+                'message' => 'Product updated successfully',
+                'status' => Response::HTTP_OK,
+                'type' => 'success',
+            ]);
+
+        } catch ( QueryException $e ) {
+            DB::rollBack();
+            return \response()->json([
+                'message' => $e->getMessage(),
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error',
+            ]);
+        }
+    }
+
+    /**
      * Delete a resource
     */
     public function delete(Request $request): JsonResponse

@@ -27,4 +27,9 @@ class Product extends Model
         'privacy_policy',
         'return_policy',
     ];
+
+    public function galleryImages()
+    {
+        return $this->hasMany(Gallery::class, 'product_id');
+    }
 }

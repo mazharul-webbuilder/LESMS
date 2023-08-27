@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
@@ -40,7 +41,7 @@ class ProductController extends Controller
         return DataTables::of($products)
             /*Thumbnail Image Column*/
             ->addColumn('thumbnail_image', function ($product) {
-                return '<img src="' . asset('/') . $product->thumbnail_image . '" alt="' . $product->name . '" class="img-thumbnail" height="50px" width="50px">';
+                return '<img src="' . asset('/images/admin/product/small/') .'/' . $product->thumbnail_image . '" alt="' . $product->name . '" class="img-thumbnail" height="50px" width="50px">';
             })
             /*Stock Management Column*/
             ->addColumn('stock_management', function ($product) {
@@ -126,6 +127,51 @@ class ProductController extends Controller
     }
 
     /**
+     * Delete a resource
+    */
+    public function delete(Request $request): JsonResponse
+    {
+        $productId = $request->productId;
+
+        try {
+            DB::beginTransaction();
+
+            $product = Product::find($productId);
+
+            // Delete gallery images
+            $galleryImages = Gallery::where('product_id', $productId)->get();
+            foreach ($galleryImages as $galleryImage) {
+                $galleryFilename = $galleryImage->image;
+                $this->deleteImages('images/admin/gallery/', $galleryFilename);
+                $galleryImage->delete();
+            }
+
+            // Delete product thumbnail images
+            $thumbnailFilename = $product->thumbnail_image;
+            $this->deleteImages('images/admin/product/', $thumbnailFilename);
+
+            // Finally, delete the product
+            $product->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Product and associated images deleted successfully',
+                'status' => Response::HTTP_OK,
+                'type' => 'success'
+            ]);
+
+        } catch (QueryException $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'error'
+            ]);
+        }
+    }
+
+    /**
      * returns all sizes
      */
     public function allSizes(): JsonResponse
@@ -179,9 +225,9 @@ class ProductController extends Controller
                 $medium_image_path = public_path() . '/images/admin/gallery/medium/' . $image_name;
                 //Resize Image
                 Image::make($image)->save($original_image_path);
-                Image::make($image)->resize(80, 120)->save($small_image_path);
-                Image::make($image)->resize(1000, 1200)->save($large_image_path);
-                Image::make($image)->resize(700, 500)->save($medium_image_path);
+                Image::make($image)->resize(240, 160)->save($small_image_path);
+                Image::make($image)->resize(1200, 800)->save($large_image_path);
+                Image::make($image)->resize(700, 466)->save($medium_image_path);
 
                 $gallery = new Gallery();
                 $gallery->product_id = $productId;
@@ -216,5 +262,26 @@ class ProductController extends Controller
         }
 
         return null;
+    }
+
+
+    /**
+     * Delete Images
+    */
+    private function deleteImages($parentDirectory, $filename): void
+    {
+        $subdirectories = ['small', 'medium', 'original', 'large'];
+
+        foreach ($subdirectories as $subdirectory) {
+            $directory = public_path($parentDirectory . $subdirectory . '/');
+
+            $url = $directory.$filename;
+
+            $filePath = urldecode(parse_url($url, PHP_URL_PATH));
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
     }
 }

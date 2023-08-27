@@ -355,6 +355,38 @@
 
             })
             /*End Product Status Control*/
+
+            /*Delete Product*/
+            $('#datatable_item').on('click', '.delete-btn', function(){
+                const productId = $(this).data('id')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('admin.product.delete') }}',
+                            method: 'get',
+                            data: {productId: productId},
+                            success: function(data) {
+                                if (data.status === 200) {
+                                    Toast.fire({
+                                        icon: data.type,
+                                        title: data.message
+                                    })
+                                    $('#datatable_item').DataTable().ajax.reload()
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+            /*End Delete Product*/
         });
 
     </script>

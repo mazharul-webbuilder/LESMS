@@ -92,7 +92,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="galleryImage">Gallery Images</label>
-                                        <input type="file" id="images" name="images[]" multiple accept="image/*" class="form-control">
+                                        <input type="file" id="images" name="galleryImages[]" multiple accept="image/*" class="form-control">
                                         <div id="image-container"></div>
                                     </div>
                                 </div>
@@ -185,7 +185,12 @@
                    processData: false,
                    success: function (data) {
                        if (data.status === 200) {
-                           window.location.href = "{{ route('admin.products') }}";
+                           Toast.fire({
+                               icon: data.type,
+                               title: data.message
+                           })
+                           $('#AddForm')[0].reset();
+                           $('#image-container').hide(2000);
                        }
                    },
                    error: function(xhr, status, error) {

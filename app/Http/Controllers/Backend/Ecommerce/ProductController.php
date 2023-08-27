@@ -71,7 +71,6 @@ class ProductController extends Controller
             ->addColumn('action', function ($product) {
                 return '
                 <div class="text-center">
-                    <button class="btn btn-primary view-btn" data-id="' . $product->id . '">View</button>
                     <button class="btn btn-warning edit-btn" data-id="' . $product->id . '">Edit</button>
                     <button class="btn btn-danger delete-btn" data-id="' . $product->id . '">Delete</button>
                 </div>
@@ -124,6 +123,16 @@ class ProductController extends Controller
                 'type' => 'error'
             ]);
         }
+    }
+
+    /**
+     * Edit an existing product
+    */
+    public function edit($id)
+    {
+        $product = Product::with('galleryImages')->find($id);
+
+        return \view('admin.ecommerce.product.edit', compact('product'));
     }
 
     /**

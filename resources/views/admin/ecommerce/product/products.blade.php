@@ -356,6 +356,15 @@
             })
             /*End Product Status Control*/
 
+            /* edit Product */
+            $('#datatable_item').on('click', '.edit-btn', function (e) {
+                const id = $(this).data('id');
+                window.location.href = '{{ url('admin/ecommerce/product-edit')}}' + '/' + id
+            });
+
+            /*End edit Product*/
+
+
             /*Delete Product*/
             $('#datatable_item').on('click', '.delete-btn', function(){
                 const productId = $(this).data('id')

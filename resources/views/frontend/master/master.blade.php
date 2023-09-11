@@ -38,13 +38,13 @@
 
 <body class="body__wrapper">
 <!-- pre loader area start -->
-<div id="back__preloader">
-    <div id="back__circle_loader"></div>
-    <div class="back__loader_logo">
-        <img src="{{ asset('asset/img') }}/pre.png" alt="Preload">
-    </div>
-</div>
-</div>
+{{--<div id="back__preloader">--}}
+{{--    <div id="back__circle_loader"></div>--}}
+{{--    <div class="back__loader_logo">--}}
+{{--        <img src="{{ asset('asset/img') }}/pre.png" alt="Preload">--}}
+{{--    </div>--}}
+{{--</div>--}}
+{{--</div>--}}
 <!-- pre loader area end -->
 
 <!-- Dark/Light area start -->
@@ -118,7 +118,7 @@
                     <div class="col-xl-2 col-lg-2 col-md-6">
                         <div class="headerarea__left">
                             <div class="headerarea__left__logo">
-                                <a href="{{ route('home') }}"><img src="{{ asset('asset/img') }}/logo/logo_1.png" alt="logo"></a>
+                                <a href="{{ route('home') }}"><img src="{{ asset('asset/img/favicon.ico') }}" alt="logo"></a>
                             </div>
 
                         </div>
@@ -127,28 +127,15 @@
                         <div class="headerarea__main__menu">
                             <nav>
                                 <ul>
-                                    <li><a class="" href="{{route('home')}}">Home
-                                            <i class="icofont-rounded-down"></i></a>
-                                        <ul class="headerarea__submenu ">
-                                            <li><a href="index.html">Home Style 1</a></li>
-                                            <li><a href="index-dark.html">Home 1 (Dark)</a></li>
-                                            <li><a href="home-2.html">Home Style 2</a></li>
-                                            <li><a href="home-2-dark.html">Home 2 (Dark)</a></li>
-                                            <li><a href="home-3.html">Home Style 3</a></li>
-                                            <li><a href="home-3-dark.html">Home 3 (Dark)</a></li>
-                                        </ul>
-                                    </li>
 
-                                    <li><a class="headerarea__has__dropdown" href="{{ route('about') }}">About</a></li>
-                                    <li><a class="headerarea__has__dropdown" href="blog.html">Blog
-                                            <i class="icofont-rounded-down"></i>
-                                        </a>
-                                        <ul class="headerarea__submenu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog-dark.html">Blog (Dark)</a></li>
-                                            <li><a href="blog-details.html">Blog-details</a></li>
-                                            <li><a href="blog-details-dark.html">Blog-details (Dark)</a></li>
-                                        </ul>
+                                    <li>
+                                        <a class="headerarea__has__dropdown" href="{{route('home')}}">Home</a>
+                                    </li>
+                                    <li>
+                                        <a class="headerarea__has__dropdown" href="{{ route('about') }}">About</a>
+                                    </li>
+                                    <li>
+                                        <a class="headerarea__has__dropdown" href="javascript:void(0)">Blogs</a>
                                     </li>
 
                                     <li><a class="headerarea__has__dropdown" href="course.html">Course
@@ -156,17 +143,8 @@
                                         </a>
                                         <ul class="headerarea__submenu">
                                             <li><a href="course.html">Course</a></li>
-                                            <li><a href="course-dark.html">Course (Dark)</a></li>
-                                            <li><a href="course-list.html">Course List</a></li>
-                                            <li><a href="course-list-dark.html">Course List (Dark)</a></li>
-                                            <li><a href="course-grid.html">Course Grid</a></li>
-                                            <li><a href="course-grid-dark.html">Course Grid (Dark)</a></li>
-                                            <li><a href="course-details.html">Course-Details</a></li>
-                                            <li><a href="course-details-dark.html">Details (Dark)</a></li>
-                                            <li><a href="course-details-2.html">Details 2</a></li>
-                                            <li><a href="course-details-2-dark.html">Details 2 (Dark)</a></li>
-                                            <li><a href="course-details-3.html">Details 3</a></li>
-                                            <li><a href="course-details-3-dark.html">Details 3 (Dark)</a></li>
+                                            <li><a href="course-dark.html">Course Category 1</a></li>
+                                            <li><a href="course-list.html">Course Category 2</a></li>
                                         </ul>
                                     </li>
 
@@ -175,20 +153,9 @@
                                             <i class="icofont-rounded-down"></i>
                                         </a>
                                         <ul class="headerarea__submenu">
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="about-dark.html">About (Dark)</a></li>
-                                            <li><a href="{{route('contact')}}">Contact</a></li>
-                                            <li><a href="contact-dark.html">Contact (Dark)</a></li>
-                                            <li><a href="instructor.html">Instructor</a></li>
-                                            <li><a href="instructor-dark.html">Instructor (Dark)</a></li>
-                                            <li><a href="instructor-details.html">Instructor-Details</a></li>
-                                            <li><a href="instructor-details-dark.html">Details (Dark)</a></li>
-                                            <li><a href="event-details.html">Event-Details</a></li>
-                                            <li><a href="event-details-dark.html">Details (Dark)</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                            <li><a href="login-dark.html">Login (Dark)</a></li>
-                                            <li><a href="error.html">Error</a></li>
-                                            <li><a href="error-dark.html">Error (Dark)</a></li>
+                                            @foreach($categories as $category)
+                                                <li><a href="{{route('ecommerce.categoryWiseProduct', ['slug' => $category->slug])}}">{{$category->name}}</a></li>
+                                            @endforeach
                                         </ul>
 
                                     </li>
@@ -203,72 +170,88 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6">
                         <div class="headerarea__right">
+                            {{--Header Wishlist--}}
                             <div class="header__cart">
+                                <span class="totatCartItem" id="wishListCounterId" style="position: absolute;top: 24px;right: 10px;border-radius: 50%;color: white;width: 22px;height: 22px;background: #F2277EFF;padding: 2px;font-size: 10px;font-weight: 500;padding-bottom: -52px;padding-right: 4px;">{{getNumberOfItemInWishlist()}}</span>
+                                <a href="#"> <i class="icofont-heart-alt"></i></a>
+                                <div class="header__right__dropdown__wrapper wishtListFreshContent">
+                                    {{--Single Cart Product--}}
+                                    @if(getNumberOfItemInWishlist()>0)
+                                        @foreach(getWishlist() as $wishlist)
+                                            <div class="header__right__dropdown__inner">
+                                                <div class="single__header__right__dropdown">
+
+                                                    <div class="header__right__dropdown__img">
+                                                        <a href="{{ route('ecommerce.productDetails', ['slug' => $wishlist->product->slug]) }}">
+                                                            <img src="{{ asset("images/admin/product/small" . "/" . $wishlist->product->thumbnail_image) }}" alt="{{$wishlist->product->name}}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="header__right__dropdown__content">
+
+                                                        <a href="{{ route('ecommerce.productDetails', ['slug' => $wishlist->product->slug]) }}">{{$wishlist->product->name}}</a>
+                                                        <p>{{$wishlist->quantity}} x <span class="price">{{$wishlist->product->current_price}} .Tk</span></p>
+
+                                                    </div>
+                                                    <div class="header__right__dropdown__close">
+                                                        <a href="javascript:void(0)"><i class="icofont-close-line wishlistCloseBtn"  data-id="{{$wishlist->id}}" ></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        {{--End Single Cart Product--}}
+
+{{--                                        <p class="dropdown__price">Total Including Tax: <span>{{currency()}} {{number_format(getCartTotalPrice())}}</span>--}}
+{{--                                        </p>--}}
+{{--                                        <div class="header__right__dropdown__button">--}}
+{{--                                            <a href="{{route('ecommerce.cart')}}" class="white__color">VIEW--}}
+{{--                                                CART</a>--}}
+{{--                                            --}}{{--                                        <a href="#" class="blue__color">CHECKOUT</a>--}}
+{{--                                        </div>--}}
+                                    @else
+                                        <h4 class="text-center">Empty Cart</h4>
+                                    @endif
+                                </div>
+                            </div>
+                            {{--Header Cart--}}
+                            <div class="header__cart">
+                                <span class="totatCartItem" id="cartCounterId" style="position: absolute;top: 24px;right: 10px;border-radius: 50%;color: white;width: 22px;height: 22px;background: #F2277EFF;padding: 2px;font-size: 10px;font-weight: 500;padding-bottom: -52px;padding-right: 4px;">{{totalCart()}}</span>
                                 <a href="#"> <i class="icofont-cart-alt"></i></a>
-                                <div class="header__right__dropdown__wrapper">
-                                    <div class="header__right__dropdown__inner">
+                                <div class="header__right__dropdown__wrapper cartList">
+                                    {{--Single Cart Product--}}
+                                    @if(totalCart()>0)
+                                    @foreach(getCarts() as $cart)
+                                        <div class="header__right__dropdown__inner">
                                         <div class="single__header__right__dropdown">
 
                                             <div class="header__right__dropdown__img">
-                                                <a href="#">
-                                                    <img src="{{ asset('asset/img')}}/grid/cart1.jpg" alt="photo">
+                                                <a href="{{ route('ecommerce.productDetails', ['slug' => $cart->product->slug]) }}">
+                                                    <img src="{{ asset("images/admin/product/small" . "/" . $cart->product->thumbnail_image) }}" alt="{{$cart->product->name}}">
                                                 </a>
                                             </div>
                                             <div class="header__right__dropdown__content">
 
-                                                <a href="shop-product.html">Web Directory</a>
-                                                <p>1 x <span class="price">$ 80.00</span></p>
+                                                <a href="{{ route('ecommerce.productDetails', ['slug' => $cart->product->slug]) }}">{{$cart->product->name}}</a>
+                                                <p>{{$cart->quantity}} x <span class="price">{{$cart->product->current_price}} .Tk</span></p>
 
                                             </div>
                                             <div class="header__right__dropdown__close">
-                                                <a href="#"><i class="icofont-close-line"></i></a>
-                                            </div>
-                                        </div>
-
-                                        <div class="single__header__right__dropdown">
-
-                                            <div class="header__right__dropdown__img">
-                                                <a href="#">
-                                                    <img src="{{ asset('asset/img')}}/grid/cart2.jpg" alt="photo">
-                                                </a>
-                                            </div>
-                                            <div class="header__right__dropdown__content">
-
-                                                <a href="../shop-product.html">Design Minois</a>
-                                                <p>1 x <span class="price">$ 60.00</span></p>
-
-                                            </div>
-                                            <div class="header__right__dropdown__close">
-                                                <a href="#"><i class="icofont-close-line"></i></a>
-                                            </div>
-                                        </div>
-
-                                        <div class="single__header__right__dropdown">
-
-                                            <div class="header__right__dropdown__img">
-                                                <a href="#">
-                                                    <img src="{{ asset('asset/img')}}/grid/cart3.jpg" alt="photo">
-                                                </a>
-                                            </div>
-                                            <div class="header__right__dropdown__content">
-
-                                                <a href="../shop-product.html">Crash Course</a>
-                                                <p>1 x <span class="price">$ 70.00</span></p>
-
-                                            </div>
-                                            <div class="header__right__dropdown__close">
-                                                <a href="#"><i class="icofont-close-line"></i></a>
+                                                <a href="javascript:void(0)"><i class="icofont-close-line cartCloseBtn"  data-id="{{$cart->id}}" ></i></a>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
+                                    {{--End Single Cart Product--}}
 
-                                    <p class="dropdown__price">Total: <span>$1,100.00</span>
+                                    <p class="dropdown__price">Total Including Tax: <span>{{currency()}} {{number_format(getCartTotalPrice())}}</span>
                                     </p>
                                     <div class="header__right__dropdown__button">
-                                        <a href="#" class="white__color">VIEW
+                                        <a href="{{route('ecommerce.cart')}}" class="white__color">VIEW
                                             CART</a>
-                                        <a href="#" class="blue__color">CHECKOUT</a>
+{{--                                        <a href="#" class="blue__color">CHECKOUT</a>--}}
                                     </div>
+                                    @else
+                                        <h4 class="text-center">Empty Cart</h4>
+                                    @endif
                                 </div>
                             </div>
                             @if (Auth::guard('web')->check())
@@ -288,7 +271,7 @@
                                                                onclick="event.preventDefault();
                                                                document.getElementById('User{{Auth::user()->id}}LogoutForm').submit()">Logout</a>
                                                         </li>
-                                                        <form action="{{ route('admin.logout') }}" method="post" id="User{{ Auth::user()->id }}LogoutForm">
+                                                        <form action="{{ route('logout') }}" method="post" id="User{{ Auth::user()->id }}LogoutForm">
                                                             @csrf
                                                         </form>
                                                     </ul>
@@ -670,6 +653,22 @@
 <script src="{{ asset('asset/js/plugins.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="{{ asset('asset/js/main.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+</script>
 
 @yield('page-footer-assets')
 
@@ -682,8 +681,7 @@
         document.getElementById("light--to-dark-button")?.classList.remove("dark--mode");
     }
 </script>
-
-
+@include('frontend.master.master-script')
 </body>
 
 </html>

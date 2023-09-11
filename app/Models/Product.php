@@ -26,10 +26,22 @@ class Product extends Model
         'minimum_order_quantity',
         'privacy_policy',
         'return_policy',
+        'affiliate_commission_type',
+        'affiliate_commission',
     ];
 
     public function galleryImages()
     {
         return $this->hasMany(Gallery::class, 'product_id');
+    }
+
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+
+    public function stcoks(){
+        return $this->hasMany(Stock::class);
     }
 }

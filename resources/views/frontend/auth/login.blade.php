@@ -163,6 +163,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-xl-12">
+                                            <div class="login__form">
+                                                <label class="form__label">Referral Code</label>
+                                                <input class="@error('referral_code') invalid-request @enderror common__login__input" value="{{old('referral_code')}}" name="referral_code" type="text" placeholder="Ex: R15836975">
+                                                @error('referral_code')
+                                                @include('common.show-validation-error-msg')
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                         <div class="col-xl-6">
                                             <div class="login__form">
                                                 <label class="form__label">Password*</label>

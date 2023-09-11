@@ -369,7 +369,7 @@
 
         }
         /* ----------------------------
-            AOS Scroll Animation 
+            AOS Scroll Animation
         -------------------------------*/
         AOS.init({
             offset: 40,
@@ -400,12 +400,14 @@
     	Cart Plus Minus Button
     ------------------------------ */
 	var CartPlusMinus = $('.cart-plus-minus');
-	
+
     CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
     CartPlusMinus.append('<div class="inc qtybutton">+</div>');
     $('.qtybutton').on('click', function() {
         var $button = $(this);
-        var oldValue = $button.parent().find('input').val();
+      //  var oldValue = $button.parent().find('input').val();
+        var oldValue = $('.cartarea__plus__minus__box').val();
+
         if ($button.text() === "+") {
             var newVal = parseFloat(oldValue) + 1;
         } else {
@@ -416,7 +418,11 @@
                 newVal = 1;
             }
         }
-        $button.parent().find('input').val(newVal);
+        $(".cartarea__plus__minus__box").val(newVal)
+        $(".selectQuantity").val(newVal)
+        //console.log(newVal)
+       // $button.parent().find('input').val(newVal);
+        //$(".cartarea__plus__minus__box").val(newVal)
     });
 
 

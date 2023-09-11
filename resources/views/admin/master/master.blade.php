@@ -274,7 +274,7 @@
                             <li><a href="{{ route('admin.products') }}">Products</a></li>
                             <li><a href="{{ route('admin.sizes') }}">Size</a></li>
                             <li><a href="#">Cart</a></li>
-                            <li><a href="#">Orders</a></li>
+                            <li><a href="{{ route('admin.orders') }}">Orders</a></li>
                         </ul>
                     </li>
 
@@ -444,7 +444,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <script>document.write(new Date().getFullYear())</script> © Skote.
+                        <script>document.write(new Date().getFullYear())</script> © YA.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-right d-none d-sm-block">

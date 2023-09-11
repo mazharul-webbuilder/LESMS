@@ -954,7 +954,7 @@ Header Area
   width: 15px;
   height: 15px;
   padding: 0 4px;
-  content: "3";
+  /*content: "3";*/
   text-align: center;
   border-radius: 100%;
   background: var(--secondaryColor);

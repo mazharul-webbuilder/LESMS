@@ -68,8 +68,8 @@ class ProductCategoryFactory extends Factory
             "Gifts",
             "Party Supplies"
         ];
-        $randomCategory = $this->faker->randomElement($categoreis);
-        $uniqueSlug = Str::slug($randomCategory) . '-' . Str::random(5);
+        $randomCategory = $this->faker->unique()->randomElement($categoreis);
+        $uniqueSlug = Str::slug($randomCategory) . '-' . Str::lower(Str::random(5));
         return [
             'name' => $randomCategory,
             'slug' => $uniqueSlug,

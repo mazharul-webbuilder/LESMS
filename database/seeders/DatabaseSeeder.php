@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use function Symfony\Component\Translation\t;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,10 +17,13 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(AdminSeeder::class);
-        $this->call(ProductCategorySeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(ProductBrandSeeder::class);
+        $this->call(ProductCategorySeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(SizeSeeder::class);
+        $this->call(PaymentSeeder::class);
+        $this->call(StockSeeder::class);
 
         Model::reguard();
     }

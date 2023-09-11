@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Helpers\AdminHelper;
+use App\Models\ProductBrand;
+use App\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -85,15 +87,17 @@ class ProductFactory extends Factory
         ];
 
         $randomProduct = $this->faker->randomElement($productNames);
-        $uniqueSlug = Str::slug($randomProduct) . '-' . Str::random(5);
+        $uniqueSlug = Str::slug($randomProduct) . '-' . Str::lower(Str::random(5));
 
         return [
             'name' => $this->faker->unique()->randomElement($productNames),
             'slug' => $uniqueSlug,
             'product_code' => AdminHelper::generateUniqueCode(),
             'short_description' => $this->faker->sentence(6),
+            'product_category_id' => $this->faker->randomElement(ProductCategory::pluck('id')),
+            'product_brand_id' => $this->faker->randomElement(ProductBrand::pluck('id')),
             'description' => $this->faker->text(200),
-            'thumbnail_image' => 'asset/img/demo-product.jpg',
+            'thumbnail_image' => 'demo-product.jpg',
             'previous_price' => $this->faker->randomFloat(2, 10, 100),
             'current_price' => $this->faker->randomFloat(2, 5, 50),
             'purchase_price' => $this->faker->randomFloat(2, 3, 30),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class RegisteredUserController extends Controller
             'last_name' => ['required', 'string', 'max:20', 'regex:/^[A-Za-z\s]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'phone' => ['numeric', 'regex:/^(?:\+\d{1,4})?\d{6,}$/'],
+            'referral_code' => ['nullable', 'string', 'min:10', 'exists:users,own_referral_code'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'terms_condition' => ['required']
         ]);
@@ -44,6 +46,9 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'referral_code' => $request->referral_code,
+            'parent_id' => ($request->referral_code != null) ? getUserByParentReferralCode($request->referral_code) : null,
+            'own_referral_code' => self::getOwnReferralCode(),
             'password' => Hash::make($request->password),
         ]);
 
@@ -53,4 +58,19 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+
+    /**
+     * Generate a unique ReferralCode for user
+    */
+    public static function getOwnReferralCode(): string
+    {
+        $ownReferralCode = 'R' . Carbon::now()->format('his') . rand(1000, 9999);
+
+        if (User::where('own_referral_code', $ownReferralCode)->exists()) {
+            $ownReferralCode = 'R' . Carbon::now()->format('his') . rand(1000, 9999);
+        }
+        return $ownReferralCode;
+    }
+
 }

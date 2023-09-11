@@ -67,6 +67,13 @@ class ProductController extends Controller
 
                 return $statusSelect;
             })
+            ->addColumn('affiliate', function ($product) {
+                return '
+                     <div class="text-center">
+                        <button class="btn affiliate-setting-btn" style="background-color: #CECE5A" data-id="' . $product->id . '">Setting</button>
+                    </div>
+                ';
+            })
             /*Action Column*/
             ->addColumn('action', function ($product) {
                 return '
@@ -76,7 +83,7 @@ class ProductController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['thumbnail_image', 'action', 'stock_management', 'status'])
+            ->rawColumns(['thumbnail_image', 'action', 'stock_management', 'status', 'affiliate'])
             ->make(true);
 
     }
@@ -280,6 +287,40 @@ class ProductController extends Controller
         }
 
     }
+    /**
+     * Return Status
+    */
+    public function additionSettingStatus(Request $request)
+    {
+        $product = Product::find($request->id);
+        $action = $request->input('action');
+        $status = 0; // Default response for cases where conditions aren't met
+
+        switch ($action) {
+            case 'flashDeal':
+                if ($product->flash_deal == 1) {
+                    $status = 200;
+                }
+                break;
+            case 'recentProduct':
+                if ($product->recent_product == 1) {
+                    $status = 200;
+                }
+                break;
+            case 'featured':
+                if ($product->featured == 1) {
+                    $status = 200;
+                }
+                break;
+            case 'bestSale':
+                if ($product->best_sale == 1) {
+                    $status = 200;
+                }
+                break;
+        }
+
+        return \response()->json(['status' => $status]);
+    }
 
     /**
      * Store Gallery Images with multiple versions of images
@@ -296,9 +337,9 @@ class ProductController extends Controller
                 $medium_image_path = public_path() . '/images/admin/gallery/medium/' . $image_name;
                 //Resize Image
                 Image::make($image)->save($original_image_path);
-                Image::make($image)->resize(240, 160)->save($small_image_path);
-                Image::make($image)->resize(1200, 800)->save($large_image_path);
-                Image::make($image)->resize(700, 466)->save($medium_image_path);
+                Image::make($image)->resize(230, 160)->save($small_image_path);
+                Image::make($image)->resize(1200, 900)->save($large_image_path);
+                Image::make($image)->resize(700, 500)->save($medium_image_path);
 
                 $gallery = new Gallery();
                 $gallery->product_id = $productId;
@@ -325,8 +366,8 @@ class ProductController extends Controller
 
             // Resize Image-
             Image::make($image)->save($original_image_path);
-            Image::make($image)->resize(80, 120)->save($small_image_path);
-            Image::make($image)->resize(1000, 1200)->save($large_image_path);
+            Image::make($image)->resize(230, 160)->save($small_image_path);
+            Image::make($image)->resize(1200, 900)->save($large_image_path);
             Image::make($image)->resize(700, 500)->save($medium_image_path);
 
             return $image_name;

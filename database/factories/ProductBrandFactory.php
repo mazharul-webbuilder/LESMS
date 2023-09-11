@@ -42,8 +42,8 @@ class ProductBrandFactory extends Factory
             "L'Oréal"
         ];
 
-        $randomBrand = $this->faker->randomElement($brands);
-        $uniqueSlug = Str::slug($randomBrand) . '-' . Str::random(5); // Append a random identifier
+        $randomBrand = $this->faker->unique()->randomElement($brands);
+        $uniqueSlug = Str::slug($randomBrand) . '-' . Str::lower(Str::random(5)); // Append a random identifier
 
         return [
             'name' => $randomBrand,

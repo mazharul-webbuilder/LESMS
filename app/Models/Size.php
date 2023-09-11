@@ -9,7 +9,8 @@ class Size extends Model
 {
     use HasFactory;
 
-    protected $table ='sizes';
+   // protected $table ='sizes';
+    protected $guarded =[];
 
     public function stocks()
     {

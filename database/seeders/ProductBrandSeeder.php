@@ -13,6 +13,6 @@ class ProductBrandSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductBrand::factory(12)->create();
+        ProductBrand::factory(5)->create();
     }
 }

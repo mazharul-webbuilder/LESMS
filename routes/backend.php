@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Backend\Ecommerce\InvoiceController;
 use App\Http\Controllers\Backend\Ecommerce\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\Backend\Ecommerce\ProductCategoryController;
 use App\Http\Controllers\Backend\Ecommerce\ProductBrandController;
 use App\Http\Controllers\Backend\Ecommerce\ProductSizeController;
 use App\Http\Controllers\Backend\Ecommerce\ProductStockController;
+use App\Http\Controllers\Backend\Ecommerce\OrderController;
+use App\Http\Controllers\Backend\Ecommerce\AffiliateController;
 
 
 
@@ -70,9 +73,20 @@ Route::prefix('admin/ecommerce/')->name('admin.')->group(function () {
     Route::get('stock-edit', [ProductStockController::class, 'edit'])->name('stock.edit');
     Route::get('stock-delete', [ProductStockController::class, 'delete'])->name('stock.delete');
 
+//    Product Affiliate Setting
+    Route::get('get-product-affiliate-info', [AffiliateController::class, 'getProductAffiliateInfo'])->name('product.affiliate.show');
+    Route::post('store/affiliate/setting', [AffiliateController::class, 'storeAffiliateSetting'])->name('affiliate.setting.store');
+//    Product Additional Setting
+    Route::get('product/additional-setting', [ProductController::class, 'additionSettingStatus'])->name('additional.setting.status');
 //    Cart Module
 
 //    Order Module
+    Route::get('order/manage', [OrderController::class, 'orders'])->name('orders');
+    Route::get('all/orders', [OrderController::class, 'allOrders'])->name('orders.all');
+    Route::get('change/order/status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
+    Route::get('order/details', [OrderController::class, 'details'])->name('order.details');
+//    Invoice Module
+    Route::get('order/invoice/{id}', [InvoiceController::class, 'invoice'])->name('order.invoice');
 
 });
 //End Ecommerce Module
